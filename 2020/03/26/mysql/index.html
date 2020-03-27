@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/03/26/mysql/1.png">
 <meta property="article:published_time" content="2020-03-26T12:54:58.000Z">
-<meta property="article:modified_time" content="2020-03-26T14:42:56.697Z">
+<meta property="article:modified_time" content="2020-03-27T03:51:03.699Z">
 <meta property="article:author" content="YUN Wei">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="MYSQL">
@@ -210,8 +210,6 @@
 <li>使用SQL标准的数据语言形式</li>
 </ul>
 <p>数据库的范式：第一范式：数据表中没有相同的字段—关系数据库</p>
-
-
 <p><img src="/2020/03/26/mysql/1.png" alt="img"></p>
 <p><strong>1·进入mySQL服务器以及创建数据库</strong></p>
 <p>mySQL安装报错：缺少ddl，api等，参考Visual C++ Redistributable for Visual Studio 2015</p>
@@ -265,7 +263,7 @@
 <p>= 赋值和判断</p>
 <p>!= , &lt;&gt; 不等于，&lt; &gt;,&lt;=,&gt;=</p>
 <p>OR  || 或者，AND &amp;&amp; 且，between…and 在…之间，in，not in</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C3.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/3.png" alt="img"></p>
 <p><strong>IN</strong> 查询集合</p>
 <p><strong>LIKE</strong> 的字符匹配查询，带有通配符%或_，只提供部分字符用于查找相似，如北京%</p>
 <p><strong>DISTINCT</strong>消除重复的属性值</p>
@@ -273,17 +271,17 @@
 <p><strong>多条件排序</strong></p>
 <p>SELECT * from 表名 ORDER BY 属性1 ASC，属性2 DESC</p>
 <p><strong>分组查询</strong></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C4.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/4.png" alt="img"></p>
 <p>将查询结果按照属性分组，只能显示第一条数据，因此需要和集体函数配合使用，应用在统计中</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C5.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/5.png" alt="img"></p>
 <p>GROUP_CONCAT()可以将分组中的某个指定字段对应的值按分组显示出来</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C6.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/6.png" alt="img"></p>
 <p>COUNT()可以计算每一组的记录数</p>
 <p>HAVING 条件表达式用于限制分组结果的显示</p>
 <p>WITH ROLLUP 对查询记录做总和：数字相加，字符串集合</p>
 <p>LIMITE限制查询记录的数量：<strong>LIMITE 初始位置，记录数</strong></p>
 <p><strong>集合函数：</strong>COUNT(),SUM(),AVG(),MAX(),MIN()</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C7.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/7.png" alt="img"></p>
 <p><strong>3.SQL语句的分类</strong></p>
 <p><strong>3.1 DDL(data definition language)数据定义语言：创建，删除，修改结构</strong></p>
 <p><strong>数据库操作：</strong></p>
@@ -296,10 +294,10 @@
 <pre><code>属性名2 数据类型 约束条件，</code></pre><p>…….</p>
 <p>属性名n 数据类型 约束条件</p>
 <p>）</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C8.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/8.png" alt="img"></p>
 <p><strong>查看表结构：</strong></p>
 <p>desc 数据表名；</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C9.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/9.png" alt="img"></p>
 <p><strong>查看创建表的sql语句：</strong></p>
 <p>show create table 数据表名;</p>
 <p><strong>删除表</strong>：</p>
@@ -340,20 +338,20 @@
 <p><strong>聚合函数：COUNT,SUM,AVG,MAX,MIN</strong></p>
 <p>select sum(列名) from 表名  查询此列的和</p>
 <p><strong>分组查询：</strong>select * from 表名 GROUP BY 列名 <strong>HAVING</strong> count(*)&gt;3</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C10.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/10.png" alt="img"></p>
 <p><strong>连接查询</strong></p>
 <p><strong>内连接查询inner join：</strong>从多个表中连接查询</p>
 <p>select s.name,m.mark,age  from student as s <strong>inner join</strong> mark as m <strong>where</strong> m.stu_id = s.id;</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C11.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/11.png" alt="img"></p>
 <p><strong>左连接查询left join: 先列左边的表为基准</strong></p>
 <p>select s.name,m.mark,age  from student as s <strong>left join</strong> mark as m <strong>on</strong> m.stu_id = s.id;</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C12.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/12.png" alt="img"></p>
 <p><strong>右连接查询right join:先列右边的表为基准</strong></p>
 <p>select s.name,m.mark,age  from student as s <strong>right join</strong> mark as m <strong>on</strong> m.stu_id = s.id;</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C13.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/13.png" alt="img"></p>
 <p><strong>联合查询</strong> 列数一致</p>
 <p>select 字段 from 表名 <strong>union all</strong> select 字段1 from 表名1</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C14.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/14.png" alt="img"></p>
 <p><strong>子查询: 查询中嵌套查询</strong></p>
 <p>select id from student where <strong>id in (select stu_id from mark)</strong>;</p>
 <p><strong>限制查询limit</strong>：限制查询条数，查询中间的条数</p>
@@ -361,7 +359,7 @@
 <p><strong>4. MySQL数据库字符集以及存储引擎</strong></p>
 <p><strong>4.1 数据库的存储引擎：插入式引擎</strong></p>
 <p>SHOW ENGINES\G</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C15.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/15.png" alt="img"></p>
 <p>SHOW VARIABLES LIKE ‘storage_engine’;  显示存储引擎</p>
 <p>SHOW VARIABLES LIKE ‘have%’; 显示所有引擎</p>
 <p><strong>InnoDB</strong>, <strong>MyISAM</strong>,MEMORY三种常用引擎，CSV,ARCHIVE，BLACKHOLE等引擎</p>
@@ -403,7 +401,7 @@
 <p>视图是由一个或者多个表中导出来的，虚拟存在的表。视图中的数据依赖原先的表中的数据。</p>
 <p>视图有利于增强用户只关心自己有用的数据，<strong>原表数据的变化会导致依赖它的视图的变化</strong>。</p>
 <p><strong>创建视图语法：</strong></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C16.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/16.png" alt="img"></p>
 <p>algotithm 定义视图选择的算法</p>
 <p>属性清单，指定视图中属性的名词</p>
 <p>with check option 更新视图时要在该视图的权限范围内</p>
@@ -419,14 +417,14 @@
 <p>视图名（属性清单）</p>
 <p>as select 属性1，属性2…….</p>
 <p>from 表名 </p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C17.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/17.png" alt="img"></p>
 <p><strong>从多个表上创建视图：</strong></p>
 <p>create algorithm=算法 view</p>
 <p>视图名（属性清单）</p>
 <p>AS select 原表属性</p>
 <p>FROM 数据表1，数据表2…… where 指定表中相同的数据</p>
 <p>WITH LOCAL CHECK OPTION;</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C18.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/18.png" alt="img"></p>
 <p><strong>查看视图：</strong></p>
 <p>DESC 视图名</p>
 <p>SHOW TABLE STATUS LIKE ‘视图名’</p>
@@ -435,8 +433,8 @@
 <p>***** 表示查询所有的列，view存储在information_schema数据库下的views表内</p>
 <p><strong>修改视图</strong>：依赖表的字段更改时需要将视图的修改以保持一致</p>
 <p><strong>create or replace view</strong>语句修改或者创建视图或者用alter语句修改视图</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C19.png" alt="img"></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C20.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/19.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/20.png" alt="img"></p>
 <p><strong>更新视图</strong>：插入insert，更新update，删除delete，改变基本表中的数据</p>
 <p><strong>查询数据表中所有的数据</strong>：SELECT * FROM 数据表；</p>
 <p><strong>插入数据</strong>：INSERT INTO 表名 values (属性值)</p>
@@ -448,11 +446,11 @@
 <p>触发器可以通过某个事件来触发某个操作，事件如INSERT语句，UPDATE语句和DELETE语句</p>
 <p>动态的改变由于事件引起的数据库属性值的变化</p>
 <p><strong>创建触发器：</strong></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C21.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/21.png" alt="img"></p>
 <p>触发事件包括：INSERT,DELETE,UPDATE语句</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C22.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/22.png" alt="img"></p>
 <p>多个执行语句：用BEGIN…….END隔开</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C23.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/23.png" alt="img"></p>
 <p><strong>查看触发器：</strong></p>
 <p>SHOW TRIGGERS\G</p>
 <p>SELECT * FROM information_schema.triggers\G</p>
@@ -479,17 +477,17 @@
 <p><strong>唯一索引 unique</strong> : unique（字段名），限制值不可以重复</p>
 <p><strong>普通索引 index,key</strong> : key(字段名)</p>
 <p>查看表的索引：show index from 表名\G</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C24.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/24.png" alt="img"></p>
 <p><strong>全文索引fulltext</strong>：加速模糊查询速度</p>
 <p>select * from 表名 where match (全文索引字段) against (‘查询词’)；</p>
 <p><strong>外键约束</strong>：外键字段属性必须与主键一致 （确保多个表的一致性 ）</p>
 <p>foreign key(子表字段) references 父表(主键)</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C25.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/25.png" alt="img"></p>
 <p>设置表的属性默认值：属性 数据类型 DEFAULT 默认值</p>
 <p><strong>标识属性为表的主键</strong></p>
 <p><strong>主键的要求：主键是唯一的，主键字段的值也是唯一的，</strong>能够快速查找到表中的信息</p>
 <p><strong>外键的概念：</strong></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C26.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/26.png" alt="img"></p>
 <p>外键必须依赖于已存在的父表的主键，</p>
 <p>外键建立了与父表的关联关系</p>
 <p><strong>CONSTRAINT</strong> 外键别名 <strong>FOREIGN</strong> <strong>KEY</strong>(属性1，属性2…………)</p>
@@ -503,7 +501,7 @@
 <p>show variables like ‘%long%’;</p>
 <p>set long_query_time = 0.5;</p>
 <p>explain sql语句：</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C27.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/27.png" alt="img"></p>
 <p>show variables like ‘%profiling%’；</p>
 <p>set profiling = on;</p>
 <p>show profiles; 展示所有的query语句耗时情况；</p>
@@ -515,7 +513,7 @@
 <p>通过修改配置文件的方式永久更改mysql的配置</p>
 <p><strong>附录知识：</strong></p>
 <p><strong>1. SQL通配符</strong></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C28.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/28.png" alt="img"></p>
 <p><strong>2. union 和 union all</strong></p>
 <p>UNION 操作符用于合并两个或多个 SELECT 语句的结果集。</p>
 <p>请注意，UNION 内部的 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每条 SELECT 语句中的列的顺序必须相同。</p>
@@ -525,13 +523,13 @@
 <p>如果对单个列定义 CHECK 约束，那么该列只允许特定的值。</p>
 <p>Id_P int NOT NULL CHECK (Id_P&gt;0) 限制 Id_P的值大于0</p>
 <p><strong>4. MYSQL的date函数</strong></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C29.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/29.png" alt="img"></p>
 <p><strong>5. MYSQL的null函数</strong></p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C30.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/30.png" alt="img"></p>
 <p>若前者为null，则返回值为0，可用于计算中</p>
 <p><strong>6. SQL MID()函数</strong></p>
 <p>MID 函数用于从文本字段中提取字符</p>
-<p><img src="/2020/03/26/mysql/C:%5CUsers%5Cyunwei%5CDesktop%5Cblog%5Csource_posts%5Cmysql%5C31.png" alt="img"></p>
+<p><img src="/2020/03/26/mysql/31.png" alt="img"></p>
 
         </div>
         <footer class="article-footer">
@@ -615,7 +613,7 @@
         "genre": "数据库",
         "datePublished": "2020-03-26",
         "dateCreated": "2020-03-26",
-        "dateModified": "2020-03-26",
+        "dateModified": "2020-03-27",
         "url": "http://yoursite.com/2020/03/26/mysql/",
         "description": "MYSQL数据库学习笔记
 0. 数据库的基本常识
