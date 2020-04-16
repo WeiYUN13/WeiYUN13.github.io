@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.PNG">
 <meta property="article:published_time" content="2020-04-15T06:42:25.000Z">
-<meta property="article:modified_time" content="2020-04-16T02:34:27.612Z">
+<meta property="article:modified_time" content="2020-04-16T07:53:34.042Z">
 <meta property="article:author" content="YUN Wei">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -219,26 +219,48 @@
 </ul>
 <h4 id="2-线性表（List）"><a href="#2-线性表（List）" class="headerlink" title="2. 线性表（List）"></a>2. 线性表（List）</h4><p>定义元素的<strong>前驱元素</strong>和<strong>后续元素</strong>（除第一个元素和最后一个外，有且只有一个）<br><strong>抽象数据类型</strong><br>指的是编程者在设计软件时自己定义的数据类型（比如定义某个类）<br><strong>抽象数据类型实例</strong>：实现数据类型的相关属性和方法</p>
 <p><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.PNG" alt="img"></p>
-<ol>
-<li>线性表的<strong>顺序存储结构</strong><br>使用地址连续的存储单元存储线性表的数据元素<br>顺序存储结构具有随机存储结构的特点，存储是指将元素存入线性表的某个位置<blockquote>
+<h5 id="1-线性表的顺序存储结构"><a href="#1-线性表的顺序存储结构" class="headerlink" title="1. 线性表的顺序存储结构"></a>1. 线性表的<strong>顺序存储结构</strong></h5><p>使用地址连续的存储单元存储线性表的数据元素<br>顺序存储结构具有随机存储结构的特点，存储是指将元素存入线性表的某个位置</p>
+<blockquote>
 <p>随机存储结构：存储的时间性能为O(1)</p>
 </blockquote>
-</li>
-</ol>
 <p>线性表的插入（删除）操作：将位置i后续元素以此向后移动一个位置，复杂度为O(n)</p>
 <p>顺序存储结构的<strong>优缺点</strong>：</p>
 <ul>
 <li><strong>优点</strong>：<br>元素间的逻辑关系不需要额外的存储空间<br>快速存取任意位置的元素</li>
 <li><strong>缺点</strong>：<br>插入和删除操作的复杂度为O(n)<br>磁盘空间碎片化</li>
 </ul>
-<ol start="2">
-<li>线性表的<strong>链式存储结构</strong></li>
-</ol>
-<p><strong>顺序存储结构</strong>的插入和存储时间复杂度为O(n)，如何解决这一问题呢？<br><strong>链式存储结构</strong>使用任意位置的存储单元，每个存储结构中需要存储后继元素的存储地址（<strong>指针</strong>）<br>结点分为<strong>数据域</strong>和<strong>指针域</strong>，只有一个指针域时称为单链表</p>
+<h5 id="2-线性表的链式存储结构"><a href="#2-线性表的链式存储结构" class="headerlink" title="2. 线性表的链式存储结构"></a>2. 线性表的<strong>链式存储结构</strong></h5><p><strong>顺序存储结构</strong>的插入和存储时间复杂度为O(n)，如何解决这一问题呢？<br><strong>链式存储结构</strong>使用任意位置的存储单元，每个存储结构中需要存储后继元素的存储地址（<strong>指针</strong>）<br>结点分为<strong>数据域</strong>和<strong>指针域</strong>，只有一个指针域时称为单链表</p>
 <blockquote>
 <p>头结点和头指针的区别</p>
 </blockquote>
-<p><strong>头指针</strong>指向链表的第一个存储位置<br><strong>头结点</strong>的数据域无意义<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8.png" alt="img"><br>单链表的读取时间复杂度为O(n)，插入和删除的复杂度为O(1)</p>
+<p><strong>头指针</strong>指向链表的第一个存储位置<br><strong>头结点</strong>的数据域无意义<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8.png" alt="img"><br>单链表的读取时间复杂度为O(n)，插入和删除的复杂度为O(1)，因此需要频繁插入或者删除数据时，单链表具有明显的优势</p>
+<blockquote>
+<p>单链表和顺序存储的对比<br>存储分配方式，时间性能， 空间性能</p>
+</blockquote>
+<h5 id="3-静态链表"><a href="#3-静态链表" class="headerlink" title="3. 静态链表"></a>3. 静态链表</h5><p>用数组描述的链表叫做静态链表，描述方法叫做游标实现法<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8.png" alt="img"><br>静态链表的第一个和最后一个元素的data不存放数据，第一个元素指向备用链表第一个节点的下标。最后一个元素指向存放第一个有数值的元素的下标，相当于头结点的作用。</p>
+<p><strong>静态链表实现单链表的操作</strong><br><strong>插入</strong>：将B插入到A后，即将B存储至备用链表的第一个元素，将A的游标改为B的下标，将B的游标改为原先A的游标（即原先A指向的下标）。<br><strong>删除</strong>：待删除元素B的游标改为B元素指向的下标的游标（B.next = B.next.next），将元素B加入备用链表中，将下标0的游标指向B的下标，B的游标指向原先0下标对应的游标。</p>
+<p><strong>静态链表的优缺点</strong><br><strong>优点</strong>：</p>
+<ul>
+<li>插入和删除时只需要修改游标，不需要移动元素</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>失去了顺序存储的随机存取的特性</li>
+<li>没有解决连续分配数组带来的表长难以确定的问题</li>
+</ul>
+<blockquote>
+<p>例题：寻找链表的中间节点</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 快慢指针</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleNode</span><span class="params">(self, head: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        slow = head</span><br><span class="line">        fast = head</span><br><span class="line">        <span class="keyword">while</span> fast.next != <span class="literal">None</span> <span class="keyword">and</span> fast.next.next != <span class="literal">None</span>:</span><br><span class="line">            fast = fast.next.next</span><br><span class="line">            slow = slow.next</span><br><span class="line">        <span class="keyword">if</span> fast.next == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> slow</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> slow.next</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
 
         </div>
         <footer class="article-footer">
@@ -337,7 +359,7 @@
 物理结构：如何把数据存储到计算机的存储器（内存）中
 
 顺序存储结构：数据存放在地址连续的内",
-        "wordCount": 21
+        "wordCount": 207
     }
 </script>
 
