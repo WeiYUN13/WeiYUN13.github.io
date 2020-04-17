@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.PNG">
 <meta property="article:published_time" content="2020-04-15T06:42:25.000Z">
-<meta property="article:modified_time" content="2020-04-16T07:53:34.042Z">
+<meta property="article:modified_time" content="2020-04-17T03:57:16.153Z">
 <meta property="article:author" content="YUN Wei">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -211,15 +211,16 @@
 <li>顺序存储结构：数据存放在地址连续的内存单元中</li>
 <li>链式存储结构：数据元素可以存储在任意的存储单元内</li>
 </ul>
-<h4 id="1-算法的复杂度"><a href="#1-算法的复杂度" class="headerlink" title="1. 算法的复杂度"></a>1. 算法的复杂度</h4><ul>
+<h2 id="1-算法的复杂度"><a href="#1-算法的复杂度" class="headerlink" title="1. 算法的复杂度"></a>1. 算法的复杂度</h2><ul>
 <li>算法的复杂度分为<strong>时间复杂度</strong>和<strong>空间复杂度</strong></li>
 <li>函数的<strong>渐进增长</strong>：判断函数的增长速度（最高项的阶数）</li>
 <li>算法的最好情况，最坏情况与平均情况</li>
 <li>算法的时间复杂度与空间复杂度是可以互换的</li>
 </ul>
-<h4 id="2-线性表（List）"><a href="#2-线性表（List）" class="headerlink" title="2. 线性表（List）"></a>2. 线性表（List）</h4><p>定义元素的<strong>前驱元素</strong>和<strong>后续元素</strong>（除第一个元素和最后一个外，有且只有一个）<br><strong>抽象数据类型</strong><br>指的是编程者在设计软件时自己定义的数据类型（比如定义某个类）<br><strong>抽象数据类型实例</strong>：实现数据类型的相关属性和方法</p>
-<p><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.PNG" alt="img"></p>
-<h5 id="1-线性表的顺序存储结构"><a href="#1-线性表的顺序存储结构" class="headerlink" title="1. 线性表的顺序存储结构"></a>1. 线性表的<strong>顺序存储结构</strong></h5><p>使用地址连续的存储单元存储线性表的数据元素<br>顺序存储结构具有随机存储结构的特点，存储是指将元素存入线性表的某个位置</p>
+<h2 id="2-线性表（List）"><a href="#2-线性表（List）" class="headerlink" title="2. 线性表（List）"></a>2. 线性表（List）</h2><p>定义元素的<strong>前驱元素</strong>和<strong>后续元素</strong>（除第一个元素和最后一个外，有且只有一个）<br><strong>抽象数据类型</strong><br>指的是编程者在设计软件时自己定义的数据类型（比如定义某个类）<br><strong>抽象数据类型实例</strong>：实现数据类型的相关属性和方法</p>
+<img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/抽象数据结构.PNG" alt="抽象数据结构" style="zoom: 80%;">
+
+<h4 id="1）-线性表的顺序存储结构"><a href="#1）-线性表的顺序存储结构" class="headerlink" title="1） 线性表的顺序存储结构"></a>1） 线性表的<strong>顺序存储结构</strong></h4><p>使用地址连续的存储单元存储线性表的数据元素<br>顺序存储结构具有随机存储结构的特点，存储是指将元素存入线性表的某个位置</p>
 <blockquote>
 <p>随机存储结构：存储的时间性能为O(1)</p>
 </blockquote>
@@ -229,15 +230,15 @@
 <li><strong>优点</strong>：<br>元素间的逻辑关系不需要额外的存储空间<br>快速存取任意位置的元素</li>
 <li><strong>缺点</strong>：<br>插入和删除操作的复杂度为O(n)<br>磁盘空间碎片化</li>
 </ul>
-<h5 id="2-线性表的链式存储结构"><a href="#2-线性表的链式存储结构" class="headerlink" title="2. 线性表的链式存储结构"></a>2. 线性表的<strong>链式存储结构</strong></h5><p><strong>顺序存储结构</strong>的插入和存储时间复杂度为O(n)，如何解决这一问题呢？<br><strong>链式存储结构</strong>使用任意位置的存储单元，每个存储结构中需要存储后继元素的存储地址（<strong>指针</strong>）<br>结点分为<strong>数据域</strong>和<strong>指针域</strong>，只有一个指针域时称为单链表</p>
+<h4 id="2）线性表的链式存储结构"><a href="#2）线性表的链式存储结构" class="headerlink" title="2）线性表的链式存储结构"></a>2）线性表的<strong>链式存储结构</strong></h4><p><strong>顺序存储结构</strong>的插入和存储时间复杂度为O(n)，如何解决这一问题呢？<br><strong>链式存储结构</strong>使用任意位置的存储单元，每个存储结构中需要存储后继元素的存储地址（<strong>指针</strong>）<br>结点分为<strong>数据域</strong>和<strong>指针域</strong>，只有一个指针域时称为单链表</p>
 <blockquote>
 <p>头结点和头指针的区别</p>
 </blockquote>
-<p><strong>头指针</strong>指向链表的第一个存储位置<br><strong>头结点</strong>的数据域无意义<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8.png" alt="img"><br>单链表的读取时间复杂度为O(n)，插入和删除的复杂度为O(1)，因此需要频繁插入或者删除数据时，单链表具有明显的优势</p>
+<p><strong>头指针</strong>指向链表的第一个存储位置<br><strong>头结点</strong>的数据域无意义<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8.png" alt="链表"><br>单链表的读取时间复杂度为O(n)，插入和删除的复杂度为O(1)，因此需要频繁插入或者删除数据时，单链表具有明显的优势</p>
 <blockquote>
 <p>单链表和顺序存储的对比<br>存储分配方式，时间性能， 空间性能</p>
 </blockquote>
-<h5 id="3-静态链表"><a href="#3-静态链表" class="headerlink" title="3. 静态链表"></a>3. 静态链表</h5><p>用数组描述的链表叫做静态链表，描述方法叫做游标实现法<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8.png" alt="img"><br>静态链表的第一个和最后一个元素的data不存放数据，第一个元素指向备用链表第一个节点的下标。最后一个元素指向存放第一个有数值的元素的下标，相当于头结点的作用。</p>
+<h4 id="3）静态链表"><a href="#3）静态链表" class="headerlink" title="3）静态链表"></a>3）静态链表</h4><p>用数组描述的链表叫做静态链表，描述方法叫做游标实现法<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8.png" alt="静态链表"><br>静态链表的第一个和最后一个元素的data不存放数据，第一个元素指向备用链表第一个节点的下标。最后一个元素指向存放第一个有数值的元素的下标，相当于头结点的作用。</p>
 <p><strong>静态链表实现单链表的操作</strong><br><strong>插入</strong>：将B插入到A后，即将B存储至备用链表的第一个元素，将A的游标改为B的下标，将B的游标改为原先A的游标（即原先A指向的下标）。<br><strong>删除</strong>：待删除元素B的游标改为B元素指向的下标的游标（B.next = B.next.next），将元素B加入备用链表中，将下标0的游标指向B的下标，B的游标指向原先0下标对应的游标。</p>
 <p><strong>静态链表的优缺点</strong><br><strong>优点</strong>：</p>
 <ul>
@@ -253,14 +254,37 @@
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 快慢指针</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleNode</span><span class="params">(self, head: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        slow = head</span><br><span class="line">        fast = head</span><br><span class="line">        <span class="keyword">while</span> fast.next != <span class="literal">None</span> <span class="keyword">and</span> fast.next.next != <span class="literal">None</span>:</span><br><span class="line">            fast = fast.next.next</span><br><span class="line">            slow = slow.next</span><br><span class="line">        <span class="keyword">if</span> fast.next == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> slow</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> slow.next</span><br></pre></td></tr></table></figure>
 
+<h4 id="4）循环链表"><a href="#4）循环链表" class="headerlink" title="4）循环链表"></a>4）循环链表</h4><p><strong>循环链表</strong>：单链表的尾节点指向头节点（rear.next = head）<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8.png" alt="循环链表"><br>循环链表常用<strong>尾指针</strong>，而不是<strong>头指针</strong></p>
+<blockquote>
+<p>例题：判断单链表中是否有环</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###快慢指针</span></span><br><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasCycle</span><span class="params">(self, head: ListNode)</span> -&gt; bool:</span></span><br><span class="line">        slow = head</span><br><span class="line">        fast = head</span><br><span class="line">        <span class="keyword">while</span> fast != <span class="literal">None</span> <span class="keyword">and</span> fast.next != <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> fast.next == slow <span class="keyword">or</span> fast.next.next == slow:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            fast = fast.next.next</span><br><span class="line">            slow = slow.next</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5）双向链表"><a href="#5）双向链表" class="headerlink" title="5）双向链表"></a>5）双向链表</h4><p>双向链表包括前驱节点和后继节点<br><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.png" alt="双向链表"></p>
+<h2 id="3-栈和队列"><a href="#3-栈和队列" class="headerlink" title="3. 栈和队列"></a>3. 栈和队列</h2><h4 id="1-栈Stack"><a href="#1-栈Stack" class="headerlink" title="1) 栈Stack"></a>1) <strong>栈Stack</strong></h4><p><strong>后进先出</strong>(last in first out)的数据结构，只在表尾进行删除和插入操作，将表尾称为栈的栈顶（TOP），将表头称为栈的栈底（BOTTOM）</p>
+<ul>
+<li>栈的插入称为push，称为进栈和压栈</li>
+<li>栈的删除称为pop，称为出栈或者弹栈<img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/栈.png" alt="栈" style="zoom: 67%;"></li>
+<li>栈分为<strong>顺序存储结构</strong>和栈的<strong>链式存储结构</strong><br>链式存储结构中栈顶为单链表的头指针</li>
+</ul>
+<blockquote>
+<p><strong>逆波兰表达式</strong>:<br>(a+b)<em>c的逆波兰式为ab+c</em>，假设计算机把ab+c*按从左到右的顺序压入栈中，并且按照遇到运算符就把栈顶两个元素出栈，执行运算，得到的结果再入栈的原则来进行处理</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">evalRPN</span><span class="params">(self, tokens: List[str])</span> -&gt; int:</span></span><br><span class="line">        stack = []</span><br><span class="line">        f1 = <span class="keyword">lambda</span> a,b : a+b</span><br><span class="line">        f2 = <span class="keyword">lambda</span> a,b : a-b</span><br><span class="line">        f3 = <span class="keyword">lambda</span> a,b : a * b</span><br><span class="line">        f4 = <span class="keyword">lambda</span> a,b : int(a / b) <span class="comment">##取整不能用 a//b</span></span><br><span class="line">        op = &#123;<span class="string">'+'</span>:f1, <span class="string">'-'</span>:f2, <span class="string">'*'</span>:f3,<span class="string">'/'</span>:f4&#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> tokens:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> op:</span><br><span class="line">                b = stack.pop()</span><br><span class="line">                a = stack.pop()</span><br><span class="line">                stack.append(op[i](a,b))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stack.append(int(i))</span><br><span class="line">        <span class="keyword">return</span> stack[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>中缀表达式转后缀表达式：运算数位置不变，改变的是运算符的位置<br>需要一个存放操作符的栈op_stack，输出结果的列表output<br>步骤：<br>从左到右遍历表达式：</p>
+</blockquote>
+<ol>
+<li>若是数字，直接加入到output</li>
+<li>若是操作符，比较该操作符和stack中操作符的优先级，若优先级大于stack中的，则压入到stack中<br> 否则，将stack中优先级大于或等于该操作符优先级的所有操作符加入到output中，然后压入stack中</li>
+<li>若是左括号，压入到stack中</li>
+<li>若是右括号，将stack中所有左括号前面的操作符加入到output中<br>重复上面的步骤<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">infix2postfix</span><span class="params">(expression)</span>:</span></span><br><span class="line">    stack = []</span><br><span class="line">    op = &#123;<span class="string">'+'</span>:<span class="number">1</span>,<span class="string">'-'</span>:<span class="number">1</span>,<span class="string">'*'</span>:<span class="number">2</span>,<span class="string">'/'</span>:<span class="number">2</span>,<span class="string">'('</span>:<span class="number">0</span>,<span class="string">')'</span>:<span class="number">0</span>&#125;</span><br><span class="line">    res = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> expression:</span><br><span class="line">        <span class="keyword">if</span> i == <span class="string">'('</span>:</span><br><span class="line">            stack.append(i)</span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">')'</span>:</span><br><span class="line">            <span class="keyword">while</span> stack[<span class="number">-1</span>] != <span class="string">'('</span>:</span><br><span class="line">                res.append(stack.pop())</span><br><span class="line">            stack.pop()</span><br><span class="line">        <span class="keyword">elif</span> i.isdigit():</span><br><span class="line">            res.append(i)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">while</span> stack != [] <span class="keyword">and</span> op[i] &lt;= op[stack[<span class="number">-1</span>]]:</span><br><span class="line">                res.append(stack.pop())</span><br><span class="line">            stack.append(i)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 
 
-
-
-
-
-
-
+</li>
+</ol>
+<h4 id="2-队列"><a href="#2-队列" class="headerlink" title="2) 队列"></a>2) <strong>队列</strong></h4><p>先进先出(first in first out)的数据结构，类似于排队的机制。</p>
 
         </div>
         <footer class="article-footer">
@@ -339,12 +363,12 @@
             "name": "YUN Wei"
         },
         "headline": "数据结构和算法",
-        "image": "http://yoursite.com/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.PNG",
+        "image": "http://yoursite.com/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/抽象数据结构.PNG",
         "keywords": "数据结构 算法",
         "genre": "数据结构和算法",
         "datePublished": "2020-04-15",
         "dateCreated": "2020-04-15",
-        "dateModified": "2020-04-16",
+        "dateModified": "2020-04-17",
         "url": "http://yoursite.com/2020/04/15/数据结构和算法/",
         "description": "
 参考链接：https://www.bilibili.com/video/BV1jW411K7yg?p=1数据结构分为逻辑结构和物理结构
@@ -359,7 +383,7 @@
 物理结构：如何把数据存储到计算机的存储器（内存）中
 
 顺序存储结构：数据存放在地址连续的内",
-        "wordCount": 207
+        "wordCount": 981
     }
 </script>
 
@@ -490,7 +514,7 @@
                             <a href="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/" class="thumbnail">
     
     
-        <span style="background-image:url(/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.PNG)" alt="数据结构和算法" class="thumbnail-image"></span>
+        <span style="background-image:url(/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/抽象数据结构.PNG)" alt="数据结构和算法" class="thumbnail-image"></span>
     
     
 </a>
