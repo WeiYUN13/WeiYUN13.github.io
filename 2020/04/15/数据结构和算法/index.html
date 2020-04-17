@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.PNG">
 <meta property="article:published_time" content="2020-04-15T06:42:25.000Z">
-<meta property="article:modified_time" content="2020-04-17T03:57:16.153Z">
+<meta property="article:modified_time" content="2020-04-17T09:03:55.148Z">
 <meta property="article:author" content="YUN Wei">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -284,7 +284,42 @@
 
 </li>
 </ol>
-<h4 id="2-队列"><a href="#2-队列" class="headerlink" title="2) 队列"></a>2) <strong>队列</strong></h4><p>先进先出(first in first out)的数据结构，类似于排队的机制。</p>
+<h4 id="2-队列（queue）"><a href="#2-队列（queue）" class="headerlink" title="2) 队列（queue）"></a>2) <strong>队列</strong>（queue）</h4><p>先进先出(first in first out)的数据结构，类似于排队的机制。队列是一种只允许在一段进行插入在另一端进行删除的线性表。队列通常使用链表来实现，称为链队列。使用链表实现的队列，插入和删除的操作时间复杂度均为O(1)。而实现顺序存储结构时，出队列的时间复杂度是O(n)。</p>
+<p><img src="/2020/04/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%98%9F%E5%88%97.png" alt="队列"></p>
+<p>解决假溢出的方法：<strong>循环队列</strong></p>
+<h2 id="4-递归与分治算法"><a href="#4-递归与分治算法" class="headerlink" title="4. 递归与分治算法"></a>4. 递归与分治算法</h2><h4 id="1）递归"><a href="#1）递归" class="headerlink" title="1）递归"></a>1）递归</h4><p><strong>递归</strong>是一种效率较低的算法，建议使用<strong>循环</strong>替换<strong>递归</strong></p>
+<blockquote>
+<p>递归过程是一种调用自身的函数，在调用的过程中存在转入子程序的过程。在每次转子前需要保护现场，则将相应参数和中间结果压入系统堆栈，而在子程序返回的时候，需要恢复现场，则将之前压栈的数据从系统堆栈弹出，因此，<strong>递归过程存在隐含的堆栈操作</strong>，而且子程序的调用过程满足堆栈先进后出的特性。递归函数调用的太深，需要太多的内存，递归里用到的局部变量存储在堆栈中，堆栈的访问效率高，速度快，但空间有限，递归太多变量需要一直入栈而不出栈，导致需要的内存空间大于堆栈的空间。</p>
+</blockquote>
+<blockquote>
+<p>例题：斐波那契数列 <a href="https://leetcode-cn.com/problems/fibonacci-number/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/fibonacci-number/</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 迭代</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(self, N: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> N <span class="keyword">in</span> [<span class="number">0</span>,<span class="number">1</span>]:</span><br><span class="line">            <span class="keyword">return</span> N</span><br><span class="line">        a = <span class="number">0</span></span><br><span class="line">        b = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(N<span class="number">-1</span>):</span><br><span class="line">            a,b = b,a+b</span><br><span class="line">        <span class="keyword">return</span> b</span><br><span class="line"></span><br><span class="line"><span class="comment">### 递归</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(self, N: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> N <span class="keyword">in</span> [<span class="number">0</span>,<span class="number">1</span>]: <span class="comment">#递归的结束条件</span></span><br><span class="line">            <span class="keyword">return</span> N</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.fib(N<span class="number">-1</span>) + self.fib(N<span class="number">-2</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2）-分治思想"><a href="#2）-分治思想" class="headerlink" title="2） 分治思想"></a>2） 分治思想</h4><blockquote>
+<p>当我们求解某些问题时，由于这些问题要处理的数据相当多，或求解过程相当复杂，使得直接求解法在时间上相当长，或者根本无法直接求出。对于这类问题，我们往往先把它分解成几个子问题，找到求出这几个子问题的解法后，再找到合适的方法，把它们组合成求整个问题的解法。如果这些子问题还较大，难以解决，可以再把它们分成几个更小的子问题，以此类推，直至可以直接求出解为止。这就是分治策略的基本思想</p>
+</blockquote>
+<blockquote>
+<p>例题：汉诺塔问题 <a href="https://leetcode-cn.com/problems/hanota-lcci/solution/tu-jie-yi-nuo-ta-de-gu-shi-ju-shuo-dang-64ge-pan-z/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/hanota-lcci/solution/tu-jie-yi-nuo-ta-de-gu-shi-ju-shuo-dang-64ge-pan-z/</a><br>注意，当你在思考这个问题的时候，就将最初的 n 个盘子从 A 移到 C 的问题，转化成了将 n - 1 个盘子从 A 移到 C 的问题， 依次类推，直至转化成 1 个盘子的问题时，问题也就解决了。这就是分治的思想。</p>
+</blockquote>
+<p>而实现分治思想的常用方法就是递归。不难发现，如果原问题可以分解成若干个与原问题结构相同但规模较小的子问题时，往往可以用递归的方法解决。具体解决办法如下：<br>n = 1 时，直接把盘子从 A 移到 C；<br>n &gt; 1 时，<br>先把上面 n - 1 个盘子从 A 移到 B（子问题，递归）；<br>再将最大的盘子从 A 移到 C；<br>再将 B 上 n - 1 个盘子从 B 移到 C（子问题，递归）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hanota</span><span class="params">(self, A: List[int], B: List[int], C: List[int])</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Do not return anything, modify C in-place instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        n = len(A)</span><br><span class="line">        self.move(n,A,B,C)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(self,n,A,B,C)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">            C.append(A[<span class="number">-1</span>])</span><br><span class="line">            A.pop()</span><br><span class="line">            <span class="keyword">return</span> </span><br><span class="line">        <span class="keyword">else</span>:                </span><br><span class="line">            self.move(n<span class="number">-1</span>,A,C,B)</span><br><span class="line">            C.append(A[<span class="number">-1</span>])</span><br><span class="line">            A.pop()</span><br><span class="line">            self.move(n<span class="number">-1</span>,B,A,C)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
         <footer class="article-footer">
@@ -383,7 +418,7 @@
 物理结构：如何把数据存储到计算机的存储器（内存）中
 
 顺序存储结构：数据存放在地址连续的内",
-        "wordCount": 981
+        "wordCount": 1528
     }
 </script>
 
