@@ -12,19 +12,21 @@
     
     <meta name="keywords" content="git,github" />
     
-    <meta name="description" content="目的：借助github托管项目代码  1）基本概念仓库：repository，用来存放项目代码，每个项目对应一个仓库，多个开源项目则有多个仓库收藏：star，收藏项目复制克隆：fork，复制某个仓库至自己的主页，复制的项目独立存在发起请求：pull request，在fork项目后，对项目进行更改。通过发起请求至原项目拥有者，对方决定是否接受此更改。关注：watch，关注了某个项目，在项目更新后">
+    <meta name="description" content="目的：借助github托管项目代码 相关链接： git使用简易指南：https:&#x2F;&#x2F;www.bootcss.com&#x2F;p&#x2F;git-guide&#x2F; pro Git: https:&#x2F;&#x2F;gitee.com&#x2F;progit&#x2F; 图形化学习界面：https:&#x2F;&#x2F;hong4rc.github.io&#x2F;test&#x2F;index.html?locale&#x3D;zh_CN  1）基本概念仓库：repository，用来存放项目代码，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学会git玩转github">
 <meta property="og:url" content="http://yoursite.com/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/index.html">
 <meta property="og:site_name" content="云威的博客">
-<meta property="og:description" content="目的：借助github托管项目代码  1）基本概念仓库：repository，用来存放项目代码，每个项目对应一个仓库，多个开源项目则有多个仓库收藏：star，收藏项目复制克隆：fork，复制某个仓库至自己的主页，复制的项目独立存在发起请求：pull request，在fork项目后，对项目进行更改。通过发起请求至原项目拥有者，对方决定是否接受此更改。关注：watch，关注了某个项目，在项目更新后">
+<meta property="og:description" content="目的：借助github托管项目代码 相关链接： git使用简易指南：https:&#x2F;&#x2F;www.bootcss.com&#x2F;p&#x2F;git-guide&#x2F; pro Git: https:&#x2F;&#x2F;gitee.com&#x2F;progit&#x2F; 图形化学习界面：https:&#x2F;&#x2F;hong4rc.github.io&#x2F;test&#x2F;index.html?locale&#x3D;zh_CN  1）基本概念仓库：repository，用来存放项目代码，">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png">
 <meta property="article:published_time" content="2020-04-23T13:28:50.000Z">
-<meta property="article:modified_time" content="2020-04-23T14:50:09.438Z">
+<meta property="article:modified_time" content="2020-04-25T11:45:54.179Z">
 <meta property="article:author" content="YUN Wei">
 <meta property="article:tag" content="git">
 <meta property="article:tag" content="github">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png">
     
 
     
@@ -196,8 +198,60 @@
         <div class="article-entry" itemprop="articleBody">
             <blockquote>
 <p><strong>目的</strong>：借助github托管项目代码</p>
+<p><strong>相关链接</strong>：</p>
+<p>git使用简易指南：<a href="https://www.bootcss.com/p/git-guide/" target="_blank" rel="noopener">https://www.bootcss.com/p/git-guide/</a></p>
+<p>pro Git: <a href="https://gitee.com/progit/" target="_blank" rel="noopener">https://gitee.com/progit/</a></p>
+<p>图形化学习界面：<a href="https://hong4rc.github.io/test/index.html?locale=zh_CN" target="_blank" rel="noopener">https://hong4rc.github.io/test/index.html?locale=zh_CN</a></p>
 </blockquote>
-<h2 id="1）基本概念"><a href="#1）基本概念" class="headerlink" title="1）基本概念"></a>1）基本概念</h2><p><strong>仓库</strong>：repository，用来存放项目代码，每个项目对应一个仓库，多个开源项目则有多个仓库<br><strong>收藏</strong>：star，收藏项目<br><strong>复制克隆</strong>：fork，复制某个仓库至自己的主页，复制的项目独立存在<br><strong>发起请求</strong>：pull request，在fork项目后，对项目进行更改。通过发起请求至原项目拥有者，对方决定是否接受此更改。<br><strong>关注</strong>：watch，关注了某个项目，在项目更新后能够第一时间收到通知<br><strong>事务卡片</strong>：issue，发现某种问题后，提出的讨论，相当于讨论区。<br><strong>git</strong>：使用<strong>git</strong>对github仓库进行管理</p>
+<h2 id="1）基本概念"><a href="#1）基本概念" class="headerlink" title="1）基本概念"></a>1）基本概念</h2><p><strong>仓库</strong>：repository，用来存放项目代码，每个项目对应一个仓库，多个开源项目则有多个仓库<br><strong>收藏</strong>：star，收藏项目<br><strong>复制克隆</strong>：fork，复制某个仓库至自己的主页，复制的项目独立存在<br><strong>发起请求</strong>：pull request，在fork项目后，对项目进行更改。通过发起请求至原项目拥有者，对方决定是否接受此更改。<br><strong>关注</strong>：watch，关注了某个项目，在项目更新后能够第一时间收到通知<br><strong>事务卡片</strong>：issue，发现某种问题后，提出的讨论，相当于讨论区。<br><strong>git</strong>：使用<strong>git</strong>对github仓库进行管理<br><strong>git的工作区，暂存区和本地仓库，远程仓库</strong><br><img src="/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png" alt></p>
+<p>git的暂存区：英文叫stage, 或index。在版本库.git）目录下，有一个index文件。它实际上就是一个包含文件索引的目录树，像是一个虚拟的工作区。在这个虚拟工作区的目录树中，记录了文件名、文件的状态信息（时间戳、文件长度等），文件的内容并不存储其中，而是保存在Git对象库（.git/objects）中，文件索引建立了文件和对象库中对象实体之间的对应。如果当前仓库，有文件更新，并且使用git add 命令，那么这些更新就会出现在暂存区中</p>
+<h2 id="2）常用函数"><a href="#2）常用函数" class="headerlink" title="2）常用函数"></a>2）常用函数</h2><ul>
+<li><strong>本地操作</strong></li>
+</ul>
+<p><strong>git config</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 'weiyun13'</span><br><span class="line">git config --global user.email 'yunwei_ecpkn@buaa.edu.cn'</span><br></pre></td></tr></table></figure>
+<p><strong>git init</strong> ：初始化git仓库<br><strong>git add</strong> ：将文件从工作区域添加到暂存区域<br><strong>git status：</strong>可以列出当前目录所有还没有被<em>git<em>管理的文件和被</em>git<em>管理且被修改但还未提交(</em>git</em> commit)的文件<br><strong>git commit -m</strong> ：将文件从暂存区提交至本地仓库</p>
+<ul>
+<li><strong>远程操作</strong></li>
+</ul>
+<p><strong>git push</strong>：将本地仓库同步到git远程仓库</p>
+<p><strong>git clone</strong>：克隆目标项目至工作目录</p>
+<h2 id="3）-git分支"><a href="#3）-git分支" class="headerlink" title="3） git分支"></a>3） <strong>git分支</strong></h2><p>几乎每一种版本控制系统都以某种形式支持分支。使用分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">创建分支</span></span><br><span class="line">git branch</span><br><span class="line"><span class="meta">#</span><span class="bash">切换分支</span></span><br><span class="line">git checkout</span><br><span class="line"><span class="meta">#</span><span class="bash">创建并切换分支</span></span><br><span class="line">git checkout -b</span><br></pre></td></tr></table></figure>
+
+<p><strong>git merge</strong>：分支工作完成后，将其合并至主分支master</p>
+<img src="/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/merge.png" style="zoom:80%;">
+
+<p><strong>git rebase</strong>：合并分区，创造线性的提交历史</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase master</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/rebase.png" style="zoom:80%;">
+
+<p><strong>head</strong>通常指向一个分支，HEAD 总是指向当前分支上最近一次提交记录。大多数修改提交树的 Git 命令都是从改变 HEAD 的指向开始的。，分离的 HEAD 就是让其指向了某个具体的提交记录而不是分支名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout c3 #head将指向c3分支</span><br></pre></td></tr></table></figure>
+
+<p><strong>相对引用</strong>：^表示向上移动一个提交记录，~<num>表示向上提交多个记录，同时可以用head当做相对应用的基准。</num></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout bugFix^</span><br><span class="line">git checkout bugFix~3</span><br></pre></td></tr></table></figure>
+
+<p><strong>强制修改分支位置</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -f master HEAD~3 #将master分支强制指向head的三级父</span><br></pre></td></tr></table></figure>
+
+<p><strong>git撤销变更</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD~3 #把分支记录回退几个提交记录来实现撤销改动，在本地分支使用，对远程分支无效</span><br><span class="line">git revert HEAD #在HEAD后添加新的提交，用于撤销当前HEAD出的提交，可用于远程撤销</span><br></pre></td></tr></table></figure>
+
+<p><strong>整理提交记录</strong>：自由修改提交树</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick #将特定的提交记录整合至当前节点后</span><br><span class="line">git rebase -i HEAD~4 #交互式的整理记录</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4）git杂项"><a href="#4）git杂项" class="headerlink" title="4）git杂项"></a>4）git杂项</h2><p><strong>本地栈式提交</strong>：使用cherry-pick或rebase将多条提交记录中的几条整合到master节点后</p>
+<p><strong>git tag</strong>：对某个提交指定标签</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag v1 c2</span><br></pre></td></tr></table></figure>
+
+<p><strong>git describe</strong>：寻找离当前节点最近的标签</p>
+<h2 id="5）git远程"><a href="#5）git远程" class="headerlink" title="5）git远程"></a>5）git远程</h2><p><strong>git clone</strong>：克隆目标项目至工作目录</p>
+<p><strong>git fetch</strong>：将本地仓库的远程分支更新为远程仓库的对应分支的最新状态</p>
+<p><strong>git pull = git fetch + git merge  <just-fetch-branch></just-fetch-branch></strong> ：获取远程仓库分支最新状态，并与本地仓库当前节点融合</p>
 
         </div>
         <footer class="article-footer">
@@ -276,18 +330,22 @@
             "name": "YUN Wei"
         },
         "headline": "学会git玩转github",
-        "image": "http://yoursite.com",
+        "image": "http://yoursite.com/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png",
         "keywords": "git github",
         "genre": "git&github",
         "datePublished": "2020-04-23",
         "dateCreated": "2020-04-23",
-        "dateModified": "2020-04-23",
+        "dateModified": "2020-04-25",
         "url": "http://yoursite.com/2020/04/23/学会git玩转github/",
         "description": "
 目的：借助github托管项目代码
+相关链接：
+git使用简易指南：https://www.bootcss.com/p/git-guide/
+pro Git: https://gitee.com/progit/
+图形化学习界面：https://hong4rc.github.io/test/index.html?locale=zh_CN
 
-1）基本概念仓库：repository，用来存放项目代码，每个项目对应一个仓库，多个开源项目则有多个仓库收藏：star，收藏项目复制克隆：fork，复制某个仓库至自己的主页，复制的项目独立存在发起请求：pull request，在fork项目后，对项目进行更改。通过发起请求至原项目拥有者，对方决定是否接受此更改。关注：watch，关注了某个项目，在项目更新后",
-        "wordCount": 6
+1）基本概念仓库：repository，用来存放项目代码，",
+        "wordCount": 198
     }
 </script>
 
@@ -388,7 +446,7 @@
                             <a href="/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png)" alt="学会git玩转github" class="thumbnail-image"></span>
     
     
 </a>
