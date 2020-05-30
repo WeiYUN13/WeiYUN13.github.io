@@ -12,16 +12,16 @@
     
     <meta name="keywords" content="git,github" />
     
-    <meta name="description" content="目的：借助github托管项目代码 相关链接： git使用简易指南：https:&#x2F;&#x2F;www.bootcss.com&#x2F;p&#x2F;git-guide&#x2F; pro Git: https:&#x2F;&#x2F;gitee.com&#x2F;progit&#x2F; 图形化学习界面：https:&#x2F;&#x2F;hong4rc.github.io&#x2F;test&#x2F;index.html?locale&#x3D;zh_CN  1）基本概念仓库：repository，用来存放项目代码，">
+    <meta name="description" content="目的：借助github托管项目代码，用于版本控制。 相关链接： git使用简易指南：https:&#x2F;&#x2F;www.bootcss.com&#x2F;p&#x2F;git-guide&#x2F; pro Git: https:&#x2F;&#x2F;gitee.com&#x2F;progit&#x2F; 图形化学习界面：https:&#x2F;&#x2F;hong4rc.github.io&#x2F;test&#x2F;index.html?locale&#x3D;zh_CN  0） git配置123git congif">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学会git玩转github">
 <meta property="og:url" content="http://yoursite.com/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/index.html">
 <meta property="og:site_name" content="云威的博客">
-<meta property="og:description" content="目的：借助github托管项目代码 相关链接： git使用简易指南：https:&#x2F;&#x2F;www.bootcss.com&#x2F;p&#x2F;git-guide&#x2F; pro Git: https:&#x2F;&#x2F;gitee.com&#x2F;progit&#x2F; 图形化学习界面：https:&#x2F;&#x2F;hong4rc.github.io&#x2F;test&#x2F;index.html?locale&#x3D;zh_CN  1）基本概念仓库：repository，用来存放项目代码，">
+<meta property="og:description" content="目的：借助github托管项目代码，用于版本控制。 相关链接： git使用简易指南：https:&#x2F;&#x2F;www.bootcss.com&#x2F;p&#x2F;git-guide&#x2F; pro Git: https:&#x2F;&#x2F;gitee.com&#x2F;progit&#x2F; 图形化学习界面：https:&#x2F;&#x2F;hong4rc.github.io&#x2F;test&#x2F;index.html?locale&#x3D;zh_CN  0） git配置123git congif">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png">
 <meta property="article:published_time" content="2020-04-23T13:28:50.000Z">
-<meta property="article:modified_time" content="2020-05-13T13:24:16.365Z">
+<meta property="article:modified_time" content="2020-05-14T03:06:10.569Z">
 <meta property="article:author" content="YUN Wei">
 <meta property="article:tag" content="git">
 <meta property="article:tag" content="github">
@@ -197,20 +197,47 @@
         
         <div class="article-entry" itemprop="articleBody">
             <blockquote>
-<p><strong>目的</strong>：借助github托管项目代码</p>
+<p><strong>目的</strong>：借助github托管项目代码，用于版本控制。</p>
 <p><strong>相关链接</strong>：</p>
 <p>git使用简易指南：<a href="https://www.bootcss.com/p/git-guide/" target="_blank" rel="noopener">https://www.bootcss.com/p/git-guide/</a></p>
 <p>pro Git: <a href="https://gitee.com/progit/" target="_blank" rel="noopener">https://gitee.com/progit/</a></p>
 <p>图形化学习界面：<a href="https://hong4rc.github.io/test/index.html?locale=zh_CN" target="_blank" rel="noopener">https://hong4rc.github.io/test/index.html?locale=zh_CN</a></p>
 </blockquote>
-<h2 id="1）基本概念"><a href="#1）基本概念" class="headerlink" title="1）基本概念"></a>1）基本概念</h2><p><strong>仓库</strong>：repository，用来存放项目代码，每个项目对应一个仓库，多个开源项目则有多个仓库<br><strong>收藏</strong>：star，收藏项目<br><strong>复制克隆</strong>：fork，复制某个仓库至自己的主页，复制的项目独立存在<br><strong>发起请求</strong>：pull request，在fork项目后，对项目进行更改。通过发起请求至原项目拥有者，对方决定是否接受此更改。<br><strong>关注</strong>：watch，关注了某个项目，在项目更新后能够第一时间收到通知<br><strong>事务卡片</strong>：issue，发现某种问题后，提出的讨论，相当于讨论区。<br><strong>git</strong>：使用<strong>git</strong>对github仓库进行管理<br><strong>git的工作区，暂存区和本地仓库，远程仓库</strong><br><img src="/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png" alt></p>
+<h2 id="0）-git配置"><a href="#0）-git配置" class="headerlink" title="0） git配置"></a>0） git配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git congif --global user.name "用户名"</span><br><span class="line">git congif --global user.email "邮箱"</span><br><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1）基本概念"><a href="#1）基本概念" class="headerlink" title="1）基本概念"></a>1）基本概念</h2><h4 id="1-github关键项"><a href="#1-github关键项" class="headerlink" title="1. github关键项"></a>1. github关键项</h4><p><strong>仓库</strong>：repository，用来存放项目代码，每个项目对应一个仓库，多个开源项目则有多个仓库<br><strong>收藏</strong>：star，收藏项目<br><strong>复制克隆</strong>：fork，复制某个仓库至自己的主页，复制的项目独立存在<br><strong>发起请求</strong>：pull request，在fork项目后，对项目进行更改。通过发起请求至原项目拥有者，对方决定是否接受此更改。<br><strong>关注</strong>：watch，关注了某个项目，在项目更新后能够第一时间收到通知<br><strong>事务卡片</strong>：issue，发现某种问题后，提出的讨论，相当于讨论区。</p>
+<h4 id="2-git相关基础"><a href="#2-git相关基础" class="headerlink" title="2. git相关基础"></a>2. git相关基础</h4><ul>
+<li>git记录的是什么？</li>
+</ul>
+<p>SVN记录的是每一次版本的变动内容</p>
+<p>git将每个版本独立存储</p>
+<ul>
+<li>git的三棵树</li>
+</ul>
+<p><strong>git</strong>：使用<strong>git</strong>对github仓库进行管理<br><strong>git的工作区，暂存区和本地仓库，远程仓库</strong><br><img src="/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F.png" alt></p>
 <p>git的暂存区：英文叫stage, 或index。在版本库.git）目录下，有一个index文件。它实际上就是一个包含文件索引的目录树，像是一个虚拟的工作区。在这个虚拟工作区的目录树中，记录了文件名、文件的状态信息（时间戳、文件长度等），文件的内容并不存储其中，而是保存在Git对象库（.git/objects）中，文件索引建立了文件和对象库中对象实体之间的对应。如果当前仓库，有文件更新，并且使用git add 命令，那么这些更新就会出现在暂存区中</p>
+<ul>
+<li>git管理的文件的三种状态：已修改modified，已暂存staged，已提交committed</li>
+</ul>
 <h2 id="2）常用函数"><a href="#2）常用函数" class="headerlink" title="2）常用函数"></a>2）常用函数</h2><ul>
 <li><strong>本地操作</strong></li>
 </ul>
 <p><strong>git config</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 'weiyun13'</span><br><span class="line">git config --global user.email 'yunwei_ecpkn@buaa.edu.cn'</span><br></pre></td></tr></table></figure>
-<p><strong>git init</strong> ：初始化git仓库<br><strong>git add</strong> ：将文件从工作区域添加到暂存区域<br><strong>git status：</strong>可以列出当前目录所有还没有被<em>git<em>管理的文件和被</em>git<em>管理且被修改但还未提交(</em>git</em> commit)的文件<br><strong>git commit -m</strong> ：将文件从暂存区提交至本地仓库</p>
+<p><strong>git init</strong> ：初始化git仓库<br><strong>git add</strong> ：将文件从工作区域添加到暂存区域<br><strong>git status：</strong>可以列出当前目录所有还没有被<em>git<em>管理的文件和被</em>git<em>管理且被修改但还未提交(</em>git</em> commit)的文件<br><strong>git commit -m</strong> “说明语句”：将文件从暂存区提交至本地仓库<br><strong>git log</strong>：显示提交记录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> git对比hsa校验码来判断文件是否相同</span></span><br><span class="line">commit 14e503609bc96f0c0007a528316526c456e4d0e0 (HEAD -&gt; master)</span><br><span class="line">Author: weiyun13 &lt;yunwei_ecpkn@buaa.edu.cn&gt;</span><br><span class="line">Date:   Wed May 13 21:58:28 2020 +0800</span><br><span class="line"></span><br><span class="line">    add a file</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>checkout</strong>和<strong>reset</strong></li>
+</ul>
+<img src="/2020/04/23/%E5%AD%A6%E4%BC%9Agit%E7%8E%A9%E8%BD%ACgithub/回退.png" style="zoom:80%;">
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD~3 #把分支记录回退几个提交记录来实现撤销改动，在本地分支使用，对远程分支无效</span><br><span class="line"><span class="meta">#</span><span class="bash"> 移动HEAD的指向，指向上一个快照。并将快照回滚至暂存区域</span></span><br></pre></td></tr></table></figure>
+
+
+
+
 <ul>
 <li><strong>远程操作</strong></li>
 </ul>
@@ -335,17 +362,17 @@
         "genre": "git&github",
         "datePublished": "2020-04-23",
         "dateCreated": "2020-04-23",
-        "dateModified": "2020-05-13",
+        "dateModified": "2020-05-14",
         "url": "http://yoursite.com/2020/04/23/学会git玩转github/",
         "description": "
-目的：借助github托管项目代码
+目的：借助github托管项目代码，用于版本控制。
 相关链接：
 git使用简易指南：https://www.bootcss.com/p/git-guide/
 pro Git: https://gitee.com/progit/
 图形化学习界面：https://hong4rc.github.io/test/index.html?locale=zh_CN
 
-1）基本概念仓库：repository，用来存放项目代码，",
-        "wordCount": 198
+0） git配置123git congif",
+        "wordCount": 292
     }
 </script>
 
@@ -453,6 +480,26 @@ pro Git: https://gitee.com/progit/
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2020/05/14/shell%E5%9F%BA%E7%A1%80/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></p>
+                            <p class="item-title"><a href="/2020/05/14/shell%E5%9F%BA%E7%A1%80/" class="title">shell基础</a></p>
+                            <p class="item-date"><time datetime="2020-05-14T12:50:04.000Z" itemprop="datePublished">2020-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2020/05/11/%E5%8A%9B%E6%89%A3%E7%AE%80%E5%8D%95%E7%AF%87-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="thumbnail">
     
     
@@ -530,26 +577,6 @@ pro Git: https://gitee.com/progit/
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2020/04/28/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></p>
-                            <p class="item-title"><a href="/2020/04/28/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" class="title">python面向对象编程</a></p>
-                            <p class="item-date"><time datetime="2020-04-28T14:36:43.000Z" itemprop="datePublished">2020-04-28</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -559,7 +586,7 @@ pro Git: https://gitee.com/progit/
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git-github/">git&github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a><span class="category-list-count">5</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git-github/">git&github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a><span class="category-list-count">6</span></li></ul>
         </div>
     </div>
 
@@ -569,7 +596,7 @@ pro Git: https://gitee.com/progit/
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -579,7 +606,7 @@ pro Git: https://gitee.com/progit/
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/" rel="tag">MYSQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" rel="tag">排序算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" rel="tag">计算机网络基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" rel="tag">面向对象编程</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/" rel="tag">MYSQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" rel="tag">排序算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" rel="tag">计算机网络基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" rel="tag">面向对象编程</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -589,7 +616,7 @@ pro Git: https://gitee.com/progit/
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 20px;">C语言</a> <a href="/tags/MYSQL/" style="font-size: 10px;">MYSQL</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/leetcode/" style="font-size: 15px;">leetcode</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" style="font-size: 10px;">排序算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">机器学习</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">计算机网络基础</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象编程</a>
+            <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 20px;">C语言</a> <a href="/tags/MYSQL/" style="font-size: 10px;">MYSQL</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/leetcode/" style="font-size: 15px;">leetcode</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" style="font-size: 10px;">排序算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">机器学习</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">计算机网络基础</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象编程</a>
         </div>
     </div>
 
