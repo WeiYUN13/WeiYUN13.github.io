@@ -12,15 +12,15 @@
     
     <meta name="keywords" content="shell" />
     
-    <meta name="description" content="shell  shell是用c语言编写，实现用户与linux内核的沟通。即是命令语言也是解释性语言。  1. shell语法shell脚本：按照命令顺序写入文本中，并给予执行权限（chmod 700） shell格式：  定义脚本的执行环境。脚本运行解析是由bin目录下的bash完成的  12345#! &#x2F;bin&#x2F;bash #Author: yunwei#create time: 2020&#x2F;5&#x2F;">
+    <meta name="description" content="shell  shell是用c语言编写，实现用户与linux内核的沟通。即是命令语言也是解释性语言。  https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1vE41127wm?p&#x3D;16 1. shell语法shell脚本：按照命令顺序写入文本中，并给予执行权限（chmod 700） shell格式：  定义脚本的执行环境。脚本运行解析是由bin目录下的bash完成的  12345">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell基础">
 <meta property="og:url" content="http://yoursite.com/2020/05/14/shell%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="云威的博客">
-<meta property="og:description" content="shell  shell是用c语言编写，实现用户与linux内核的沟通。即是命令语言也是解释性语言。  1. shell语法shell脚本：按照命令顺序写入文本中，并给予执行权限（chmod 700） shell格式：  定义脚本的执行环境。脚本运行解析是由bin目录下的bash完成的  12345#! &#x2F;bin&#x2F;bash #Author: yunwei#create time: 2020&#x2F;5&#x2F;">
+<meta property="og:description" content="shell  shell是用c语言编写，实现用户与linux内核的沟通。即是命令语言也是解释性语言。  https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1vE41127wm?p&#x3D;16 1. shell语法shell脚本：按照命令顺序写入文本中，并给予执行权限（chmod 700） shell格式：  定义脚本的执行环境。脚本运行解析是由bin目录下的bash完成的  12345">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-14T12:50:04.000Z">
-<meta property="article:modified_time" content="2020-05-16T02:38:55.998Z">
+<meta property="article:modified_time" content="2020-06-03T07:31:30.133Z">
 <meta property="article:author" content="YUN Wei">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
@@ -197,6 +197,7 @@
 <p>shell</p>
 </blockquote>
 <p>shell是用c语言编写，实现用户与linux内核的沟通。即是命令语言也是解释性语言。 </p>
+<p><a href="https://www.bilibili.com/video/BV1vE41127wm?p=16" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1vE41127wm?p=16</a></p>
 <h2 id="1-shell语法"><a href="#1-shell语法" class="headerlink" title="1. shell语法"></a>1. shell语法</h2><p><strong>shell脚本</strong>：按照命令顺序写入文本中，并给予执行权限（chmod 700）</p>
 <p><strong>shell格式</strong>：</p>
 <ul>
@@ -266,7 +267,10 @@
 
 
 <p><strong>for语法</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">1.</span></span><br><span class="line">for i in `seq 1 9`</span><br><span class="line">    do</span><br><span class="line">        echo $i</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">2.</span></span><br><span class="line">for ((i=1;i&lt;10;i++))</span><br><span class="line">    do</span><br><span class="line">        echo $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p><strong>while循环</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">while [ $i -ne 5 ]</span><br><span class="line">    do</span><br><span class="line">        echo $i</span><br><span class="line">        ((i++))</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 
 
@@ -375,19 +379,20 @@
         "genre": "软件开发",
         "datePublished": "2020-05-14",
         "dateCreated": "2020-05-14",
-        "dateModified": "2020-05-16",
+        "dateModified": "2020-06-03",
         "url": "http://yoursite.com/2020/05/14/shell基础/",
         "description": "
 shell
 
 shell是用c语言编写，实现用户与linux内核的沟通。即是命令语言也是解释性语言。 
+https://www.bilibili.com/video/BV1vE41127wm?p=16
 1. shell语法shell脚本：按照命令顺序写入文本中，并给予执行权限（chmod 700）
 shell格式：
 
 定义脚本的执行环境。脚本运行解析是由bin目录下的bash完成的
 
-12345#! /bin/bash #Author: yunwei#create time: 2020/5/",
-        "wordCount": 1099
+12345",
+        "wordCount": 1198
     }
 </script>
 
