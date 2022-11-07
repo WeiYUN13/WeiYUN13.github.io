@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dog.jpeg">
+  <link rel="icon" href="/images/dog.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wei yun">
+  <meta name="keywords" content="博客,软件工程师,芯片设计,定位芯片">
+  
+    <meta name="description" content="1. 简介 https:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;cdk&#x2F;v2&#x2F;guide&#x2F;home.html  AWS Cloud Development Kit (CDK) 使用代码定义云基础设施，通过生成AWS CloudFormation模版部署云服务。可以把CDK看作是CloudFormation的上层包装，CDK最终会生成CloudFormation模版。 基础设施、应用代码以及配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS CDK">
+<meta property="og:url" content="http://example.com/2022/06/14/AWS-CDK/index.html">
+<meta property="og:site_name" content="云威的博客">
+<meta property="og:description" content="1. 简介 https:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;cdk&#x2F;v2&#x2F;guide&#x2F;home.html  AWS Cloud Development Kit (CDK) 使用代码定义云基础设施，通过生成AWS CloudFormation模版部署云服务。可以把CDK看作是CloudFormation的上层包装，CDK最终会生成CloudFormation模版。 基础设施、应用代码以及配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/06/14/AWS-CDK/AWS-CDK/AppStacks.png">
+<meta property="og:image" content="http://example.com/2022/06/14/AWS-CDK/AWS-CDK/image-20220615152108151.png">
+<meta property="og:image" content="http://example.com/2022/06/14/AWS-CDK/image-20220615155214976.png">
+<meta property="article:published_time" content="2022-06-14T18:56:58.000Z">
+<meta property="article:modified_time" content="2022-11-07T09:56:47.935Z">
+<meta property="article:author" content="wei yun">
+<meta property="article:tag" content="AWS CDK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/06/14/AWS-CDK/AWS-CDK/AppStacks.png">
+  
+  
+  <title>AWS CDK - 云威的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>云威的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="AWS CDK">
+              
+                AWS CDK
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-15 02:56" pubdate>
+        2022年6月15日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      68 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">AWS CDK</h1>
+            
+            <div class="markdown-body">
+              <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cdk/v2/guide/home.html">https://docs.aws.amazon.com/cdk/v2/guide/home.html</a></p>
+</blockquote>
+<p><em>AWS Cloud Development Kit (CDK)</em> 使用<strong>代码定义云基础设施</strong>，通过生成AWS CloudFormation模版部署云服务。可以把CDK看作是CloudFormation的上层包装，CDK最终会生成CloudFormation模版。</p>
+<p>基础设施、应用代码以及配置等均可以使用代码来管理。CDK可以很好的将AWS service整合起来。可复用service已有的AWS CloudFormation templates。</p>
+<p>CDK是用于搭建基础设施的代码，具体的应用代码可以用调用SDK实现。CDK搭建基础设施后，可以由SDK进行调用。</p>
+<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2. 概念"></a>2. 概念</h1><img src="AWS-CDK/AppStacks.png" srcset="/img/loading.gif" lazyload alt="img" style="zoom:80%;" />
+
+<h2 id="1-Constructs"><a href="#1-Constructs" class="headerlink" title="1. Constructs"></a>1. Constructs</h2><p>Constructs是AWS CDK apps基础的building block。最基础的云组件，可以是单个AWS 资源，也可以是多个AWS资源的高级抽象。</p>
+<p>一个Stack由多个Constructs构成，一个app可以由多个Stack构成。</p>
+<p>L1 Constructs: CloudFormation原生支持，必须配置资源的所有properties</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs dns">CfnBucket  <span class="hljs-keyword">A</span> CloudFormation AWS<span class="hljs-number">::</span>S<span class="hljs-number">3::</span>Bucket.<br></code></pre></td></tr></table></figure>
+
+<p>L2 Constructs: L1的高层封装，提供默认值以及逻辑封装</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">Bucket </span> An <span class="hljs-built_in">S3</span> <span class="hljs-keyword">bucket </span>with associated policy objects.<br></code></pre></td></tr></table></figure>
+
+<p>L3 constructs: 特殊用法，通常是为了完成相似类型的任务，具有少量的参数接口</p>
+<p>Constructs是一种层级的结构<em>construct tree</em>，高等级的Constructs可以由低等级的Constructs组合而成。如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NotifyingBucket</span>(<span class="hljs-title class_ inherited__">Construct</span>):<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, scope: Construct, <span class="hljs-built_in">id</span>: <span class="hljs-built_in">str</span>, *, prefix=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__(scope, <span class="hljs-built_in">id</span>)<br>        bucket = s3.Bucket(self, <span class="hljs-string">&quot;bucket&quot;</span>)<br>        topic = sns.Topic(self, <span class="hljs-string">&quot;topic&quot;</span>)<br>        bucket.add_object_created_notification(s3notify.SnsDestination(topic),<br>            s3.NotificationKeyFilter(prefix=prefix))<br>  <br></code></pre></td></tr></table></figure>
+
+<p>Constructs具有</p>
+<ul>
+<li><strong>scope</strong>：Constructs的父层级</li>
+<li><strong>id</strong>：Constructs标识符</li>
+<li><strong>props</strong>：Constructs的配置参数</li>
+</ul>
+<h1 id="3-流程"><a href="#3-流程" class="headerlink" title="3. 流程"></a>3. 流程</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html">https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/WeiYUN13/blog_examples/tree/master/hello-cdk">https://github.com/WeiYUN13/blog_examples/tree/master/hello-cdk</a></p>
+</blockquote>
+<h2 id="1-创建app"><a href="#1-创建app" class="headerlink" title="1. 创建app"></a>1. 创建app</h2><p>CDK project依赖local的module</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir hello-cdk<br>cd hello-cdk<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用app模版初始化CDK project</span><br>cdk init app --language python<br>&lt;&lt;&#x27;COMMENT&#x27;<br>╭─noname@yunwei ~/Desktop/work/hello-cdk ‹master› <br>╰─$ tree                    <br>.<br>├── README.md<br>├── app.py<br>├── cdk.json<br>├── hello_cdk<br>│   ├── __init__.py<br>│   └── hello_cdk_stack.py<br>├── requirements-dev.txt<br>├── requirements.txt<br>├── source.bat<br>└── tests<br>    ├── __init__.py<br>    └── unit<br>        ├── __init__.py<br>        └── test_hello_cdk_stack.py<br><br>3 directories, 11 files<br>COMMENT<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用venv安装requirements</span><br>source .venv/bin/activate<br>python -m pip install -r requirements.txt<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-添加s3-buckets"><a href="#2-添加s3-buckets" class="headerlink" title="2. 添加s3 buckets"></a>2. 添加s3 buckets</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> aws_cdk <span class="hljs-keyword">as</span> cdk<br><span class="hljs-keyword">import</span> aws_cdk.aws_s3 <span class="hljs-keyword">as</span> s3<br>            <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloCdkStack</span>(cdk.Stack):<br>		<br>    <span class="hljs-comment"># 此处的scope是定义当前stack的parent</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, scope: cdk.App, construct_id: <span class="hljs-built_in">str</span>, **kwargs</span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-built_in">super</span>().__init__(scope, construct_id, **kwargs)<br>				<span class="hljs-comment"># 定义scope，self表示当前的stack，构建元素间的层级关系</span><br>        <span class="hljs-comment"># id表示逻辑ID，不是bucket name， bucket_name由cloudFormation指定</span><br>        <span class="hljs-comment"># versioned启用版本控制</span><br>        bucket = s3.Bucket(self, <span class="hljs-string">&quot;MyFirstBucket&quot;</span>, versioned=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-生成CloudFormation-templates"><a href="#3-生成CloudFormation-templates" class="headerlink" title="3. 生成CloudFormation templates"></a>3. 生成CloudFormation templates</h2><p>Run <code>cdk synth</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br> <span class="hljs-attr">&quot;Resources&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;MyFirstBucketB8884501&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>   <span class="hljs-attr">&quot;Type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;AWS::S3::Bucket&quot;</span><span class="hljs-punctuation">,</span><br>   <span class="hljs-attr">&quot;Properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;VersioningConfiguration&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>     <span class="hljs-attr">&quot;Status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Enabled&quot;</span> # 启动版本控制<br>    <span class="hljs-punctuation">&#125;</span><br>   <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>   <span class="hljs-attr">&quot;UpdateReplacePolicy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Retain&quot;</span><span class="hljs-punctuation">,</span><br>   <span class="hljs-attr">&quot;DeletionPolicy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Retain&quot;</span><span class="hljs-punctuation">,</span><br>   <span class="hljs-attr">&quot;Metadata&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;aws:cdk:path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;HelloCdkStack/MyFirstBucket/Resource&quot;</span><br>   <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  ...<br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4-部署"><a href="#4-部署" class="headerlink" title="4. 部署"></a>4. 部署</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">配置aws region以及profile， 默认profile为default</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">[default]</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">region=us-west-2</span><br>export AWS_PROFILE=sts<br><span class="hljs-meta prompt_"># </span><span class="language-bash">deploy前会自动synth</span><br>cdk deploy<br></code></pre></td></tr></table></figure>
+
+<p><code>cdk bootstrap</code> Deploys the CDK toolkit stack into an AWS environment</p>
+<p>CDK引导程序，AWS CloudFormation部署所需的外部文件，需要使用引导程序预先保存到AWS S3 bucket中。</p>
+<p>CDKToolkit stack保存各种AWS CDK所需资源，比如保存app的CloudFormation的template json至S3中。</p>
+<img src="AWS-CDK/image-20220615152108151.png" srcset="/img/loading.gif" lazyload alt="image-20220615152108151" style="zoom:80%;" />
+
+<p><strong>Stack</strong>是AWS CDK部署的基本单元：也就是CDK按单个Stack进行部署。</p>
+<h2 id="5-更新"><a href="#5-更新" class="headerlink" title="5. 更新"></a>5. 更新</h2><p>CDK通过CloudFormation的changeset，更新app。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">bucket = s3.Bucket(self, <span class="hljs-string">&quot;MyFirstBucket&quot;</span>,<br>    versioned=<span class="hljs-literal">True</span>,<br>    removal_policy=cdk.RemovalPolicy.DESTROY, <span class="hljs-comment"># stack摧毁时自动删除bucket</span><br>    auto_delete_objects=<span class="hljs-literal">True</span>) <span class="hljs-comment"># 自动删除bucket的对象</span><br></code></pre></td></tr></table></figure>
+
+<p><code>cdk diff</code>查看diff</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs txt">╰─$ cdk diff            <br>Stack HelloCdkStack<br>IAM Statement Changes<br>┌───┬───────────────────────────────────────────────────────────────┬────────┬───────────────────────────────────────┬───────────────────────────────────────────────────────────────────┬───────────┐<br>│   │ Resource                                                      │ Effect │ Action                                │ Principal                                                         │ Condition │<br>├───┼───────────────────────────────────────────────────────────────┼────────┼───────────────────────────────────────┼───────────────────────────────────────────────────────────────────┼───────────┤<br>│ + │ $&#123;Custom::S3AutoDeleteObjectsCustomResourceProvider/Role.Arn&#125; │ Allow  │ sts:AssumeRole                        │ Service:lambda.amazonaws.com                                      │           │<br>├───┼───────────────────────────────────────────────────────────────┼────────┼───────────────────────────────────────┼───────────────────────────────────────────────────────────────────┼───────────┤<br>│ + │ $&#123;MyFirstBucket.Arn&#125;                                          │ Allow  │ s3:DeleteObject*                      │ AWS:$&#123;Custom::S3AutoDeleteObjectsCustomResourceProvider/Role.Arn&#125; │           │<br>│   │ $&#123;MyFirstBucket.Arn&#125;/*                                        │        │ s3:GetBucket*                         │                                                                   │           │<br>│   │                                                               │        │ s3:List*                              │                                                                   │           │<br>└───┴───────────────────────────────────────────────────────────────┴────────┴───────────────────────────────────────┴───────────────────────────────────────────────────────────────────┴───────────┘<br>IAM Policy Changes<br>┌───┬───────────────────────────────────────────────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────┐<br>│   │ Resource                                                  │ Managed Policy ARN                                                                           │<br>├───┼───────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤<br>│ + │ $&#123;Custom::S3AutoDeleteObjectsCustomResourceProvider/Role&#125; │ &#123;&quot;Fn::Sub&quot;:&quot;arn:$&#123;AWS::Partition&#125;:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole&quot;&#125; │<br>└───┴───────────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────┘<br>(NOTE: There may be security-related changes not in this list. See https://github.com/aws/aws-cdk/issues/1299)<br><br>Resources<br>[+] AWS::S3::BucketPolicy MyFirstBucket/Policy MyFirstBucketPolicy3243DEFD <br>[+] Custom::S3AutoDeleteObjects MyFirstBucket/AutoDeleteObjectsCustomResource MyFirstBucketAutoDeleteObjectsCustomResourceC52FCF6E <br>[+] AWS::IAM::Role Custom::S3AutoDeleteObjectsCustomResourceProvider/Role CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092 <br>[+] AWS::Lambda::Function Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F <br>[~] AWS::S3::Bucket MyFirstBucket MyFirstBucketB8884501 <br> ├─ [+] Tags<br> │   └─ [&#123;&quot;Key&quot;:&quot;aws-cdk:auto-delete-objects&quot;,&quot;Value&quot;:&quot;true&quot;&#125;]<br> ├─ [~] DeletionPolicy<br> │   ├─ [-] Retain<br> │   └─ [+] Delete<br> └─ [~] UpdateReplacePolicy<br>     ├─ [-] Retain<br>     └─ [+] Delete<br></code></pre></td></tr></table></figure>
+
+<p><code>cdk deploy</code>重新部署此更新</p>
+<p><img src="/2022/06/14/AWS-CDK/image-20220615155214976.png" srcset="/img/loading.gif" lazyload></p>
+<p>由于新的destroy policy的引入，Stack资源加入了更多的component，比如用于删除S3 objects的lambda函数<code>CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F</code></p>
+<h2 id="6-销毁"><a href="#6-销毁" class="headerlink" title="6. 销毁"></a>6. 销毁</h2><p><code>cdk destroy</code> 快速销毁CDK创建的AWS资源</p>
+<p>部分资源需要配置<code>RemovalPolicy</code>以定制destroy时采取的策略。</p>
+<h1 id="4-python开发"><a href="#4-python开发" class="headerlink" title="4. python开发"></a>4. python开发</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/aws-samples/aws-cdk-examples">https://github.com/aws-samples/aws-cdk-examples</a></p>
+</blockquote>
+<h2 id="1-AWS-Construct-Library"><a href="#1-AWS-Construct-Library" class="headerlink" title="1. AWS Construct Library"></a>1. AWS Construct Library</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cdk/api/v2/python/index.html">https://docs.aws.amazon.com/cdk/api/v2/python/index.html</a></p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">python -m pip install aws-cdk-lib<br>import aws_cdk as cdk<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-AWS-CLI"><a href="#2-AWS-CLI" class="headerlink" title="2. AWS CLI"></a>2. AWS CLI</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install -g aws-cdk<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-s3-trigger-lambda"><a href="#3-s3-trigger-lambda" class="headerlink" title="3. s3 trigger lambda"></a>3. s3 trigger lambda</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># lambda_handler.py</span><br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> urllib.parse<br><span class="hljs-keyword">import</span> boto3<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Loading function&#x27;</span>)<br><br>s3 = boto3.client(<span class="hljs-string">&#x27;s3&#x27;</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lambda_handler</span>(<span class="hljs-params">event, context</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Received event: &quot;</span> + json.dumps(event, indent=<span class="hljs-number">2</span>))<br><br>    <span class="hljs-comment"># Get the object from the event and show its content type</span><br>    bucket = event[<span class="hljs-string">&#x27;Records&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;s3&#x27;</span>][<span class="hljs-string">&#x27;bucket&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>]<br>    key = urllib.parse.unquote_plus(<br>        event[<span class="hljs-string">&#x27;Records&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;s3&#x27;</span>][<span class="hljs-string">&#x27;object&#x27;</span>][<span class="hljs-string">&#x27;key&#x27;</span>], encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    response = s3.get_object(Bucket=bucket, Key=key)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;CONTENT TYPE: &quot;</span> + response[<span class="hljs-string">&#x27;ContentType&#x27;</span>])<br>    <span class="hljs-built_in">print</span>(response.get()[<span class="hljs-string">&#x27;Body&#x27;</span>].read().decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    <span class="hljs-keyword">return</span> response[<span class="hljs-string">&#x27;ContentType&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> aws_cdk <span class="hljs-keyword">import</span> (<br>    aws_lambda <span class="hljs-keyword">as</span> lambda_,<br>    Stack,<br>    aws_s3 <span class="hljs-keyword">as</span> s3,<br>    aws_s3_notifications,<br>)<br><span class="hljs-keyword">from</span> constructs <span class="hljs-keyword">import</span> Construct<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">S3TriggerLambdaStack</span>(<span class="hljs-title class_ inherited__">Stack</span>):<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, scope: Construct, construct_id: <span class="hljs-built_in">str</span>, **kwargs</span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-built_in">super</span>().__init__(scope, construct_id, **kwargs)<br><br>        <span class="hljs-comment"># create lambda function</span><br>        function = lambda_.Function(self, <span class="hljs-string">&quot;lambda_function_example&quot;</span>,<br>                                    runtime=lambda_.Runtime.PYTHON_3_9,<br>                                    handler=<span class="hljs-string">&quot;lambda_handler.lambda_handler&quot;</span>,<br>                                    code=lambda_.Code.from_asset(<span class="hljs-string">&quot;./lambda&quot;</span>))<br><br>        <span class="hljs-comment"># create s3 buckets</span><br>        s3_bucket = s3.Bucket(self, <span class="hljs-string">&quot;my_s3_bucket&quot;</span>)<br><br>        <span class="hljs-comment"># s3_bucket授予lambda读权限</span><br>        s3_bucket.grant_read(function)<br>        <br>        <span class="hljs-comment"># s3 notification to lambda function</span><br>        notification = aws_s3_notifications.LambdaDestination(function)<br><br>        <span class="hljs-comment"># send notification after event</span><br>        s3_bucket.add_event_notification(s3.EventType.OBJECT_CREATED, notification)<br><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/AWS/">AWS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/AWS-CDK/">AWS CDK</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/06/AWS-IAM/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AWS IAM</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/13/AWS-lambda/">
+                        <span class="hidden-mobile">AWS lambda</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dog.jpeg">
+  <link rel="icon" href="/images/dog.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wei yun">
+  <meta name="keywords" content="博客,软件工程师,芯片设计,定位芯片">
+  
+    <meta name="description" content="串口基础同步通信是指，发送方发出数据后，等接收方发回响应以后才发下一个数据包的通讯方式。 异步通信是指，发送方发出数据后，不等接收方发回响应，接着发送下个数据包的通讯方式。 换句话说，同步通信是阻塞方式，异步通信是非阻塞方式。在常见通信总线协议中，I2C，SPI属于同步通信而UART属于异步通信。同步通信的通信双方必须先建立同步，即双方的时钟要调整到同一个频率，收发双方不停地发送和接收连续的同步比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="serial">
+<meta property="og:url" content="http://example.com/2022/10/13/serial/index.html">
+<meta property="og:site_name" content="云威的博客">
+<meta property="og:description" content="串口基础同步通信是指，发送方发出数据后，等接收方发回响应以后才发下一个数据包的通讯方式。 异步通信是指，发送方发出数据后，不等接收方发回响应，接着发送下个数据包的通讯方式。 换句话说，同步通信是阻塞方式，异步通信是非阻塞方式。在常见通信总线协议中，I2C，SPI属于同步通信而UART属于异步通信。同步通信的通信双方必须先建立同步，即双方的时钟要调整到同一个频率，收发双方不停地发送和接收连续的同步比">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/10/13/serial/uart.png">
+<meta property="og:image" content="http://example.com/2022/10/13/serial/uart_connect.png">
+<meta property="og:image" content="http://example.com/2022/10/13/serial/image-20221102110505354.png">
+<meta property="og:image" content="http://example.com/2022/10/13/serial/serial/image-20221102134334435.png">
+<meta property="article:published_time" content="2022-10-13T18:49:05.000Z">
+<meta property="article:modified_time" content="2022-11-07T09:56:47.955Z">
+<meta property="article:author" content="wei yun">
+<meta property="article:tag" content="串口">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/10/13/serial/uart.png">
+  
+  
+  <title>serial - 云威的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>云威的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="serial">
+              
+                serial
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-10-14 02:49" pubdate>
+        2022年10月14日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">serial</h1>
+            
+            <div class="markdown-body">
+              <h1 id="串口基础"><a href="#串口基础" class="headerlink" title="串口基础"></a>串口基础</h1><p>同步通信是指，发送方发出数据后，等接收方发回响应以后才发下一个数据包的通讯方式。</p>
+<p>异步通信是指，发送方发出数据后，不等接收方发回响应，接着发送下个数据包的通讯方式。</p>
+<p>换句话说，同步通信是阻塞方式，异步通信是非阻塞方式。在常见通信总线协议中，I2C，SPI属于同步通信而UART属于异步通信。同步通信的通信双方必须先建立同步，即双方的时钟要调整到同一个频率，收发双方不停地发送和接收连续的同步比特流。异步通信在发送字符时，发送端可以在任意时刻开始发送字符，所以，在UART通信中，数据起始位和停止位是必不可少的。</p>
+<h2 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h2><blockquote>
+<p>Universal Asynchronous Receiver&#x2F;Transmitter (UART)</p>
+<p><a target="_blank" rel="noopener" href="https://www.circuitbasics.com/basics-uart-communication/">https://www.circuitbasics.com/basics-uart-communication/</a></p>
+</blockquote>
+<p><img src="/2022/10/13/serial/uart.png" srcset="/img/loading.gif" lazyload></p>
+<p>UART是对称异步通信串口。发送端在任意时刻均可发送数据，接收端若未及时接收则数据丢失。可以看出异步通信要求双方提前等待数据的传输（串口的速度远低于CPU的速度），从而避免数据丢失。UART通信只需要两条导线。</p>
+<p><img src="/2022/10/13/serial/uart_connect.png" srcset="/img/loading.gif" lazyload alt="uart_connect.png"></p>
+<p>UART通信的基本要求是：</p>
+<ol>
+<li>UART双方保持一致的波特率以及数据包配置，不需要保持一致的时钟频率</li>
+<li>UART双方TX连接到对方的RX</li>
+</ol>
+<h3 id="1-Transmitter"><a href="#1-Transmitter" class="headerlink" title="1. Transmitter"></a>1. Transmitter</h3><p>包含一个Transmitter FIFO (TX FIFO)，Transmitter Shift Register (TSR)，和Transmitter Controller (TX controller)。用于向外界的UART口传输比特流，FIFO以及buffer只用作输出时的缓存，接收端只是被动接受。接收端未及时接收则数据丢失。</p>
+<h4 id="1-Transmitter-FIFO-TX-FIFO"><a href="#1-Transmitter-FIFO-TX-FIFO" class="headerlink" title="1. Transmitter FIFO (TX FIFO)"></a>1. Transmitter FIFO (TX FIFO)</h4><p>存储着需要传输的数据，APB BUS通过写入THR寄存器，可以向FIFO中添加数据。可以软件外置一个buffer，从buffer中向FIFO同步，达到软件上提升FIFO容量的目的。</p>
+<h4 id="2-Transmitter-Shift-Register-TSR"><a href="#2-Transmitter-Shift-Register-TSR" class="headerlink" title="2. Transmitter Shift Register (TSR)"></a>2. Transmitter Shift Register (TSR)</h4><p>TSR移位寄存器每次从FIFO中获取一个字，并将并行数据转换为0101的串行的比特流。</p>
+<h4 id="3-Transmitter-Controller-TX-controller"><a href="#3-Transmitter-Controller-TX-controller" class="headerlink" title="3. Transmitter Controller (TX controller)"></a>3. Transmitter Controller (TX controller)</h4><p>TX controller为比特流添加开始结尾以及奇偶校验信息后输出该比特流至IO pad上。IO pad可以外接到外部的UART RXD引脚。外部的UART 通过该RXD引脚接收芯片UART口的TXD引脚比特流，并解析得到数据。</p>
+<h3 id="2-Reciever"><a href="#2-Reciever" class="headerlink" title="2. Reciever"></a>2. Reciever</h3><p>包含Receiver FIFO (RX FIFO), Receiver Shift Register (RSR), 和Receiver Controller (RX Controller)。接收端接收外界UART TXD口输入的比特流</p>
+<h4 id="1-Receiver-Controller-RX-Controller"><a href="#1-Receiver-Controller-RX-Controller" class="headerlink" title="1. Receiver Controller (RX Controller)"></a>1. Receiver Controller (RX Controller)</h4><p>RX Controller通过过采样时钟采样输入的比特流（每个过采样率下采样一次）并校验，这个过程与TX controller相反。要求两个UART有相同的波特率。</p>
+<h4 id="2-Receiver-Shift-Register-RSR"><a href="#2-Receiver-Shift-Register-RSR" class="headerlink" title="2. Receiver Shift Register (RSR)"></a>2. Receiver Shift Register (RSR)</h4><p>RX Controller获取的比特流通过RSR移位寄存器转换为字存储至RX FIFO中。</p>
+<h4 id="3-Receiver-FIFO-RX-FIFO"><a href="#3-Receiver-FIFO-RX-FIFO" class="headerlink" title="3. Receiver FIFO (RX FIFO)"></a>3. Receiver FIFO (RX FIFO)</h4><p>CPU可以通过读取RBR寄存器来读取FIFO中的数据。同样可以软件外置一个buffer来提升RX FIFO的容量。与TX FIFO不同的是，RX FIFO能够缓存数据，FIFO以及buffer满后，后续的数据会丢失。Receiver FIFO接收到一定的数据后会触发中断，CPU执行中断程序搬运FIFO数据至buffer。</p>
+<h3 id="3-波特率"><a href="#3-波特率" class="headerlink" title="3. 波特率"></a>3. 波特率</h3><p>uart的波特率即传输bit的速度，通过uart clock分频生成Baud Rate Generator clock，由此clock在oversampling ratio下，每oversampling ratio个cycles对同一个输入bit采样，以及生成对应波特率的输出bit流。</p>
+<p>reciever和transmitter的波特率必需配置相同才能正确的通信。</p>
+<h4 id="过采样"><a href="#过采样" class="headerlink" title="过采样"></a>过采样</h4><p>即对单个数据采样多次，Baud Rate Generator clock在每个cycle下采样，对同一个bit采样oversampling ratio次。START BIT只有半个周期，即只会被采样oversampling ratio &#x2F; 2次。</p>
+<p>一定的过采样能够有效的抑制时钟周期不稳定对数据传输的影响。</p>
+<h3 id="4-Modem-controller"><a href="#4-Modem-controller" class="headerlink" title="4. Modem controller"></a>4. Modem controller</h3><blockquote>
+<p>不被大多数的UART设备使用</p>
+</blockquote>
+<p>提供自动的数据流控制功能，通过一组RTS(Request to send)&#x2F;CTS(Clear to send)信号连接到对应UART的该信号上（RTS连接到CTS，CTS连接到RTS）。通过控制RTS的信号值，控制通信对方UART CTS值，CTS拉低时不再继续传输数据，达到控制数据流的作用。</p>
+<p>TXFIFO里有数据的时候，如果没有flow control，数据则会立即被发送出去。</p>
+<h3 id="5-DMA"><a href="#5-DMA" class="headerlink" title="5. DMA"></a>5. DMA</h3><p>可以为RXFIFO或者TXFIFO在某个阈值下触发DMA操作。对于transmitter，可以配置DMA将芯片某处数据搬运至THR寄存器，从而向外传输数据。对于reciever，DMA 将RBR寄存器数据搬运值芯片某处，达到读取uart的效果。</p>
+<p>DMA搬运数据不依赖总线以及CPU，能够节省CPU时间。</p>
+<h3 id="6-中断"><a href="#6-中断" class="headerlink" title="6. 中断"></a>6. 中断</h3><p>uart有多个中断信号，可以将所有中断信号or后输出至CPU，使得一个uart设备只占用一个中断。在中断处理程序IRQ中对多个uart中断信号分开处理。</p>
+<ol>
+<li>Receiver line status：传输过程中的错误导致的中断或数据overrun丢失，读取LSR寄存器后清空</li>
+<li>Received data available：RXFIFO数据量超出阈值，读取RBR寄存器至低于阈值后清空</li>
+<li>Character timeout: RXFIFO初始态，读取RBR寄存器后清空</li>
+<li>Transmitter Holding Register empty：transmitter FIFO置空。重新写入字清空。</li>
+<li>Modem status：调制解调器事件发生，如CTS被拉低</li>
+</ol>
+<p>uart中断可以很好的触发内置FIFO和软件外置bufferd的数据同步，如在Received data available时读取RXFIFO数据至外置buffer，或者在Transmitter Holding Register empty时从外置的buffer中取数据写入TXFIFO。</p>
+<h2 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h2><blockquote>
+<p>General purpose I&#x2F;O (GPIO)  通用输入输出</p>
+</blockquote>
+<p>GPIO作为通用的输入输出口，可以由软件配置为输入或者输出，或者即是输入也是输出。通俗地说，就是一些引脚，可以通过它们<strong>输出高低电平</strong>或者通过它们读入引脚的状态是高电平或是低电平。一定程度上能够复用芯片上不多的pin，达到输入和输出的目的。</p>
+<p><img src="/2022/10/13/serial/image-20221102110505354.png" srcset="/img/loading.gif" lazyload alt="image-20221102110505354"></p>
+<p>每个GPIO channel可以单独配置为输入或输出，作为输入时GPIO controller对输入信号采样，降噪(de-bounce)，产生中断。作为输出时可以在pull-up或者pull-down配置下输出信号。</p>
+<h3 id="1-pull-up和pull-down"><a href="#1-pull-up和pull-down" class="headerlink" title="1. pull-up和pull-down"></a>1. pull-up和pull-down</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://raspberrypi.stackexchange.com/questions/4569/what-is-a-pull-up-resistor-what-does-it-do-and-why-is-it-needed">https://raspberrypi.stackexchange.com/questions/4569/what-is-a-pull-up-resistor-what-does-it-do-and-why-is-it-needed</a></p>
+<p>理解什么是上拉电阻和下拉电阻</p>
+</blockquote>
+<img src="serial/image-20221102134334435.png" srcset="/img/loading.gif" lazyload alt="image-20221102134334435" style="zoom:50%;" />
+
+<p>避免由于输入pin处于floating状态下不确定的电平，使用上拉电阻将输入默认至高，下拉电阻将输入默认至低。在某个pin浮动时通过一个电阻将其状态确定下来。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://bbs.eeworld.com.cn/thread-1070283-1-1.html">http://bbs.eeworld.com.cn/thread-1070283-1-1.html</a></p>
+</blockquote>
+<p>IO端口通常会有一些配置上拉下拉的选项。</p>
+<h3 id="2-GPIO-signals"><a href="#2-GPIO-signals" class="headerlink" title="2. GPIO signals"></a>2. GPIO signals</h3><p>gpio_in[N:0] 				  Input      PAD 							GPIO input data</p>
+<p>gpio_oe[N:0] 			    Output   PAD 							GPIO output data enable signal. Active high(channel 																							direction register作为输出)</p>
+<p>gpio_out[N:0] 			  Output   PAD 							 GPIO output data</p>
+<p>gpio_pullup[N:0] 		 Output.  PAD 							GPIO output pull-up enable signal</p>
+<p>gpio_pulldown[N:0]    Output   PAD 							 GPIO output pull-down enable signal</p>
+<p>gpio_intr 					  Output   Interrupt controller   ATCGPIO100 interrupt signal</p>
+<p>extclk                            Input      Clock generator         External de-bouncing clock source. The clock source 																							must be at least 4x slower than pclk.</p>
+<h3 id="3-channel-control"><a href="#3-channel-control" class="headerlink" title="3. channel control"></a>3. channel control</h3><p>寄存器控制每个GPIO channel，包括输入输出数据，以及pull类型配置。</p>
+<h3 id="4-de-bounce-control"><a href="#4-de-bounce-control" class="headerlink" title="4. de-bounce control"></a>4. de-bounce control</h3><p>寄存器控制输入降噪，包括每个channel降噪开启，降噪时钟源的选择，以及降噪的scale</p>
+<h3 id="5-interrupt-control"><a href="#5-interrupt-control" class="headerlink" title="5. interrupt control"></a>5. interrupt control</h3><p>寄存器控制中断，包括中断的开启，中断状态，以及每个channel的中断触发模式（高电平，低电平，上升沿，下降沿，dual edge）。通过中断来调用CPU处理GPIO的输入数据。</p>
+<h3 id="6-usage"><a href="#6-usage" class="headerlink" title="6. usage"></a>6. usage</h3><p>GPIO通常作为通用的IO输入输出，通常最终会被连接到芯片的输入输出引脚上。由于不只是GPIO需要输出，像uart， spi以及芯片内部的信号需要输出，经常输出引脚的数量低于需求量。因此可以在芯片内设置IOmux，通过寄存器选择需要输出的信号，达到IO pad有效复用的目的。</p>
+<p>可以说IO pad里实现了一个GPIO，通过与内部的ATCGPIO控制的GPIO通信，同时也可以在硬件中配置与其他的信号相互连接。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E2%80%9CUART%E2%80%9D/">“UART”</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B8%B2%E5%8F%A3/">串口</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/03/mcu-key-components/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">单片机组件</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/10/prn%E7%A0%81/">
+                        <span class="hidden-mobile">prn码</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

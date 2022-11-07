@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dog.jpeg">
+  <link rel="icon" href="/images/dog.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wei yun">
+  <meta name="keywords" content="博客,软件工程师,芯片设计,定位芯片">
+  
+    <meta name="description" content="1. 简介 https:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;AWSCloudFormation&#x2F;latest&#x2F;UserGuide&#x2F;Welcome.html https:&#x2F;&#x2F;1c7.me&#x2F;aws-cloudformation-tutorial-in-chinese&#x2F;  CloudFormation是AWS对Infrastructure as Code (IaC)基础设施即代码的实现。把要用的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS CloudFormation">
+<meta property="og:url" content="http://example.com/2022/06/07/AWS-CloudFormation/index.html">
+<meta property="og:site_name" content="云威的博客">
+<meta property="og:description" content="1. 简介 https:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;AWSCloudFormation&#x2F;latest&#x2F;UserGuide&#x2F;Welcome.html https:&#x2F;&#x2F;1c7.me&#x2F;aws-cloudformation-tutorial-in-chinese&#x2F;  CloudFormation是AWS对Infrastructure as Code (IaC)基础设施即代码的实现。把要用的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/06/07/AWS-CloudFormation/image-20220729110253282.png">
+<meta property="article:published_time" content="2022-06-07T18:41:01.000Z">
+<meta property="article:modified_time" content="2022-11-07T09:56:47.939Z">
+<meta property="article:author" content="wei yun">
+<meta property="article:tag" content="AWS CloudFormation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/06/07/AWS-CloudFormation/image-20220729110253282.png">
+  
+  
+  <title>AWS CloudFormation - 云威的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>云威的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="AWS CloudFormation">
+              
+                AWS CloudFormation
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-08 02:41" pubdate>
+        2022年6月8日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      39 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">AWS CloudFormation</h1>
+            
+            <div class="markdown-body">
+              <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://1c7.me/aws-cloudformation-tutorial-in-chinese/">https://1c7.me/aws-cloudformation-tutorial-in-chinese/</a></p>
+</blockquote>
+<p>CloudFormation是AWS对<strong>Infrastructure as Code</strong> (IaC)基础设施即代码的实现。把要用的AWS资源，写成模板文件，方便复用和追踪版本变更。</p>
+<p>CloudFormation用<strong>配置文件搭建和管理AWS资源</strong>，简化对基础设施的管理，可以将一组AWS资源作为一个单独的单元进行管理。资源配置完全是用配置文件实现的，因此可以对配置文件做版本管理，回退以及更新都十分简单。</p>
+<p>CloudFormation负责创建和管理资源，对资源的后续具体操作，与CloudFormation无关。CloudFormation可以在销毁AWS资源的时候使用<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html"><strong>DeletionPolicy</strong></a>保留部分资源。</p>
+<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2. 概念"></a>2. 概念</h1><h2 id="1-templates"><a href="#1-templates" class="headerlink" title="1. templates"></a>1. templates</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html</a></p>
+</blockquote>
+<p>模版定义了AWS的资源以及特性，定义在配置文件中。CloudFormation通过调用底层的AWS服务来配置资源。每个template定义一个stack，单个stack中可以包含多种不同的AWS资源。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">AWSTemplateFormatVersion:</span> <span class="hljs-number">2010-09-09</span><br><span class="hljs-attr">Description:</span> <span class="hljs-string">A</span> <span class="hljs-string">sample</span> <span class="hljs-string">template</span><br><span class="hljs-attr">Resources:</span><br>  <span class="hljs-attr">MyEC2Instance:</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">&#x27;AWS::EC2::Instance&#x27;</span><br>    <span class="hljs-attr">Properties:</span><br>      <span class="hljs-attr">ImageId:</span> <span class="hljs-string">ami-0ff8a91507f77f867</span> <span class="hljs-comment"># software配置名，用于配置EC2 Instance</span><br>      <span class="hljs-attr">InstanceType:</span> <span class="hljs-string">t2.micro</span> <span class="hljs-comment"># https://aws.amazon.com/cn/ec2/instance-types/t2/</span><br>      <span class="hljs-attr">KeyName:</span> <span class="hljs-string">testkey</span><br>      <span class="hljs-attr">BlockDeviceMappings:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">DeviceName:</span> <span class="hljs-string">/dev/sdm</span><br>          <span class="hljs-attr">Ebs:</span><br>            <span class="hljs-attr">VolumeType:</span> <span class="hljs-string">io1</span><br>            <span class="hljs-attr">Iops:</span> <span class="hljs-number">200</span><br>            <span class="hljs-attr">DeleteOnTermination:</span> <span class="hljs-literal">false</span><br>            <span class="hljs-attr">VolumeSize:</span> <span class="hljs-number">20</span><br>  <span class="hljs-attr">MyEIP:</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">&#x27;AWS::EC2::EIP&#x27;</span><br>    <span class="hljs-attr">Properties:</span><br>      <span class="hljs-attr">InstanceId:</span> <span class="hljs-type">!Ref</span> <span class="hljs-string">MyEC2Instance</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://console.aws.amazon.com/cloudformation/designer"><strong>AWS CloudFormation Designer</strong></a>使用图形界面编辑并生成templates.</p>
+<h2 id="2-Stacks"><a href="#2-Stacks" class="headerlink" title="2. Stacks"></a>2. Stacks</h2><p>CloudFormation通过template配置和管理的资源集合称为<strong>stack</strong></p>
+<blockquote>
+<p>A stack is a collection of AWS resources that you can manage as a single unit. In other words, you can create, update, or delete a collection of resources by creating, updating, or deleting stacks. All the resources in a stack are defined by the stack’s AWS CloudFormation template. A stack, for instance, can include all the resources required to run a web application, such as a web server, a database, and networking rules. If you no longer require that web application, you can simply delete the stack, and all of its related resources are deleted.</p>
+</blockquote>
+<h2 id="3-Change-sets"><a href="#3-Change-sets" class="headerlink" title="3. Change sets"></a>3. Change sets</h2><p>change sets用来更新stacks，将修改后的templates和原始的templates对比生成change sets。应用至Stacks。Change sets反应了即将进行的更新对各种stack资源的修改。</p>
+<blockquote>
+<p>When you need to update your stack’s resources, you can modify the stack’s template. You don’t need to create a new stack and delete the old one. To update a stack, create a change set by submitting a modified version of the original stack template, different input parameter values, or both. CloudFormation compares the modified template with the original template and generates a change set. The change set lists the proposed changes.</p>
+</blockquote>
+<h1 id="3-Getting-started"><a href="#3-Getting-started" class="headerlink" title="3. Getting started"></a>3. Getting started</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/GettingStarted.Walkthrough.html">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/GettingStarted.Walkthrough.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://s3.us-west-2.amazonaws.com/cloudformation-templates-us-west-2/WordPress_Single_Instance.template">https://s3.us-west-2.amazonaws.com/cloudformation-templates-us-west-2/WordPress_Single_Instance.template</a></p>
+</blockquote>
+<h2 id="1-template参数化"><a href="#1-template参数化" class="headerlink" title="1. template参数化"></a>1. template参数化</h2><p>CloudFormation支持向template中传入参数，可以在创建stack的时候定制stack</p>
+<h2 id="2-template存储"><a href="#2-template存储" class="headerlink" title="2. template存储"></a>2. template存储</h2><p>template可以存储至本地或者S3。</p>
+<p>在使用template创建stack时，CloudFormation会将templates存储至对应region的S3特定bucket中。</p>
+<p><img src="/2022/06/07/AWS-CloudFormation/image-20220729110253282.png" srcset="/img/loading.gif" lazyload alt="image-20220729110253282"></p>
+<h2 id="3-template基础"><a href="#3-template基础" class="headerlink" title="3. template基础"></a>3. template基础</h2><blockquote>
+<p>常见函数：<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html</a></p>
+</blockquote>
+<h3 id="1-Resources"><a href="#1-Resources" class="headerlink" title="1. Resources"></a>1. Resources</h3><p>AWS资源的配置以及相互关联</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">Parameters:</span><br>  <span class="hljs-attr">KeyName:</span><br>    <span class="hljs-attr">Description:</span> <span class="hljs-string">The</span> <span class="hljs-string">EC2</span> <span class="hljs-string">Key</span> <span class="hljs-string">Pair</span> <span class="hljs-string">to</span> <span class="hljs-string">allow</span> <span class="hljs-string">SSH</span> <span class="hljs-string">access</span> <span class="hljs-string">to</span> <span class="hljs-string">the</span> <span class="hljs-string">instance</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">&#x27;AWS::EC2::KeyPair::KeyName&#x27;</span><br><span class="hljs-attr">Resources:</span><br>  <span class="hljs-attr">Ec2Instance:</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">&#x27;AWS::EC2::Instance&#x27;</span> <span class="hljs-comment"># 资源类型</span><br>    <span class="hljs-attr">Properties:</span> <span class="hljs-comment"># 定义资源的Properties，可用默认值</span><br>      <span class="hljs-attr">SecurityGroups:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-type">!Ref</span> <span class="hljs-string">InstanceSecurityGroup</span>  <span class="hljs-comment"># ref函数指向另外一个资源</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">MyExistingSecurityGroup</span><br>      <span class="hljs-attr">KeyName:</span> <span class="hljs-type">!Ref</span> <span class="hljs-string">KeyName</span>  <span class="hljs-comment"># ref函数指向Parameters</span><br>      <span class="hljs-attr">ImageId:</span> <span class="hljs-string">ami-7a11e213</span><br>  <span class="hljs-attr">InstanceSecurityGroup:</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">&#x27;AWS::EC2::SecurityGroup&#x27;</span><br>    <span class="hljs-attr">Properties:</span><br>      <span class="hljs-attr">GroupDescription:</span> <span class="hljs-string">Enable</span> <span class="hljs-string">SSH</span> <span class="hljs-string">access</span> <span class="hljs-string">via</span> <span class="hljs-string">port</span> <span class="hljs-number">22</span><br>      <span class="hljs-attr">SecurityGroupIngress:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">IpProtocol:</span> <span class="hljs-string">tcp</span><br>          <span class="hljs-attr">FromPort:</span> <span class="hljs-number">22</span><br>          <span class="hljs-attr">ToPort:</span> <span class="hljs-number">22</span><br>          <span class="hljs-attr">CidrIp:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-string">/0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-Parameters"><a href="#2-Parameters" class="headerlink" title="2. Parameters"></a>2. Parameters</h3><p>定义输入参数的特性以及限制（用于验证输入是否合法），Parameters可以被后续的Resources等引用。</p>
+<p>无默认值的参数必须指定，如KeyName，有默认值的参数未指定时使用默认参数。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">Parameters:</span><br>  <span class="hljs-attr">KeyName:</span><br>    <span class="hljs-attr">Description:</span> <span class="hljs-string">Name</span> <span class="hljs-string">of</span> <span class="hljs-string">an</span> <span class="hljs-string">existing</span> <span class="hljs-string">EC2</span> <span class="hljs-string">KeyPair</span> <span class="hljs-string">to</span> <span class="hljs-string">enable</span> <span class="hljs-string">SSH</span> <span class="hljs-string">access</span> <span class="hljs-string">into</span> <span class="hljs-string">the</span> <span class="hljs-string">WordPress</span> <span class="hljs-string">web</span> <span class="hljs-string">server</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">AWS::EC2::KeyPair::KeyName</span><br>  <span class="hljs-attr">WordPressUser:</span><br>    <span class="hljs-attr">Default:</span> <span class="hljs-string">admin</span><br>    <span class="hljs-attr">NoEcho:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">Description:</span> <span class="hljs-string">The</span> <span class="hljs-string">WordPress</span> <span class="hljs-string">database</span> <span class="hljs-string">admin</span> <span class="hljs-string">account</span> <span class="hljs-string">user</span> <span class="hljs-string">name</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">String</span><br>    <span class="hljs-attr">MinLength:</span> <span class="hljs-number">1</span><br>    <span class="hljs-attr">MaxLength:</span> <span class="hljs-number">16</span><br>    <span class="hljs-attr">AllowedPattern:</span> <span class="hljs-string">&quot;[a-zA-Z][a-zA-Z0-9]*&quot;</span><br>  <span class="hljs-attr">WebServerPort:</span><br>    <span class="hljs-attr">Default:</span> <span class="hljs-number">8888</span><br>    <span class="hljs-attr">Description:</span> <span class="hljs-string">TCP/IP</span> <span class="hljs-string">port</span> <span class="hljs-string">for</span> <span class="hljs-string">the</span> <span class="hljs-string">WordPress</span> <span class="hljs-string">web</span> <span class="hljs-string">server</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">Number</span><br>    <span class="hljs-attr">MinValue:</span> <span class="hljs-number">1</span><br>    <span class="hljs-attr">MaxValue:</span> <span class="hljs-number">65535</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Mappings"><a href="#3-Mappings" class="headerlink" title="3. Mappings"></a>3. Mappings</h3><p>更加灵活的将值与值做映射。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">Parameters:</span><br>  <span class="hljs-attr">KeyName:</span><br>    <span class="hljs-attr">Description:</span> <span class="hljs-string">Name</span> <span class="hljs-string">of</span> <span class="hljs-string">an</span> <span class="hljs-string">existing</span> <span class="hljs-string">EC2</span> <span class="hljs-string">KeyPair</span> <span class="hljs-string">to</span> <span class="hljs-string">enable</span> <span class="hljs-string">SSH</span> <span class="hljs-string">access</span> <span class="hljs-string">to</span> <span class="hljs-string">the</span> <span class="hljs-string">instance</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">String</span><br><span class="hljs-attr">Mappings:</span><br>  <span class="hljs-attr">RegionMap:</span><br>    <span class="hljs-attr">us-east-1:</span><br>      <span class="hljs-attr">AMI:</span> <span class="hljs-string">ami-76f0061f</span><br>    <span class="hljs-attr">us-west-1:</span><br>      <span class="hljs-attr">AMI:</span> <span class="hljs-string">ami-655a0a20</span><br>    <span class="hljs-attr">eu-west-1:</span><br>      <span class="hljs-attr">AMI:</span> <span class="hljs-string">ami-7fd4e10b</span><br>    <span class="hljs-attr">ap-southeast-1:</span><br>      <span class="hljs-attr">AMI:</span> <span class="hljs-string">ami-72621c20</span><br>    <span class="hljs-attr">ap-northeast-1:</span><br>      <span class="hljs-attr">AMI:</span> <span class="hljs-string">ami-8e08a38f</span><br><span class="hljs-attr">Resources:</span><br>  <span class="hljs-attr">Ec2Instance:</span><br>    <span class="hljs-attr">Type:</span> <span class="hljs-string">&#x27;AWS::EC2::Instance&#x27;</span><br>    <span class="hljs-attr">Properties:</span><br>      <span class="hljs-attr">KeyName:</span> <span class="hljs-type">!Ref</span> <span class="hljs-string">KeyName</span><br>      <span class="hljs-attr">ImageId:</span> <span class="hljs-type">!FindInMap</span> <span class="hljs-comment"># 对于不同的AWS::Region，自动采用不同的AMI</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">RegionMap</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-type">!Ref</span> <span class="hljs-string">&#x27;AWS::Region&#x27;</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">AMI</span><br>      <span class="hljs-attr">UserData:</span> <span class="hljs-type">!Base64</span> <span class="hljs-string">&#x27;80&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-Outputs"><a href="#4-Outputs" class="headerlink" title="4. Outputs"></a>4. Outputs</h3><p>stack输出的log</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">Outputs:</span><br>  <span class="hljs-attr">InstallURL:</span><br>    <span class="hljs-attr">Value:</span> <span class="hljs-type">!Join</span> <br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;&#x27;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;http://&#x27;</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-type">!GetAtt</span> <br>          <span class="hljs-bullet">-</span> <span class="hljs-string">ElasticLoadBalancer</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">DNSName</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">/wp-admin/install.php</span><br>    <span class="hljs-attr">Description:</span> <span class="hljs-string">Installation</span> <span class="hljs-string">URL</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">WordPress</span> <span class="hljs-string">website</span><br>  <span class="hljs-attr">WebsiteURL:</span><br>    <span class="hljs-attr">Value:</span> <span class="hljs-type">!Join</span> <br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;&#x27;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;http://&#x27;</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-type">!GetAtt</span> <br>          <span class="hljs-bullet">-</span> <span class="hljs-string">ElasticLoadBalancer</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">DNSName</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/AWS/">AWS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/AWS-CloudFormation/">AWS CloudFormation</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/08/AWS-Basics/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AWS Basics</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/01/protobuf/">
+                        <span class="hidden-mobile">protobuf</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dog.jpeg">
+  <link rel="icon" href="/images/dog.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wei yun">
+  <meta name="keywords" content="博客,软件工程师,芯片设计,定位芯片">
+  
+    <meta name="description" content="一篇关于GPS定位写得最详实清晰的文章（上） - 枯荣有常的文章 - 知乎 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;150435858  1. 概念1. agps辅助定位在传统GPS定位方式中，定位模块需要全频段搜索以找到可用卫星，因而耗时较长。而“AGPS辅助定位”方式，是通过网络直接下载当前地区的可用卫星星历数据，并通过串口设备将之发送给定位模块，定位模块只搜索特定的卫星，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="定位基础">
+<meta property="og:url" content="http://example.com/2022/09/14/positionning/index.html">
+<meta property="og:site_name" content="云威的博客">
+<meta property="og:description" content="一篇关于GPS定位写得最详实清晰的文章（上） - 枯荣有常的文章 - 知乎 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;150435858  1. 概念1. agps辅助定位在传统GPS定位方式中，定位模块需要全频段搜索以找到可用卫星，因而耗时较长。而“AGPS辅助定位”方式，是通过网络直接下载当前地区的可用卫星星历数据，并通过串口设备将之发送给定位模块，定位模块只搜索特定的卫星，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-14T18:23:02.000Z">
+<meta property="article:modified_time" content="2022-11-07T09:56:47.955Z">
+<meta property="article:author" content="wei yun">
+<meta property="article:tag" content="positionning">
+<meta property="article:tag" content="GPS">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>定位基础 - 云威的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>云威的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="定位基础">
+              
+                定位基础
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-09-15 02:23" pubdate>
+        2022年9月15日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      10 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">定位基础</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>一篇关于GPS定位写得最详实清晰的文章（上） - 枯荣有常的文章 - 知乎 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150435858">https://zhuanlan.zhihu.com/p/150435858</a></p>
+</blockquote>
+<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><h2 id="1-agps辅助定位"><a href="#1-agps辅助定位" class="headerlink" title="1. agps辅助定位"></a>1. agps辅助定位</h2><p>在传统GPS定位方式中，定位模块需要全频段搜索以找到可用卫星，因而耗时较长。而“AGPS辅助定位”方式，是通过网络直接下载当前地区的可用卫星星历数据，并通过串口设备将之发送给定位模块，定位模块只搜索特定的卫星，从而提高了搜星速度，减少设备耗电。</p>
+<h3 id="1-AGPS辅助定位基本流程"><a href="#1-AGPS辅助定位基本流程" class="headerlink" title="1. AGPS辅助定位基本流程"></a>1. AGPS辅助定位基本流程</h3><ol>
+<li>设备从蜂窝基站获取到当前位置的小区信息；</li>
+<li>设备通过<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%9C%82%E7%AA%9D%E7%BD%91%E7%BB%9C&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:%22150435858%22%7D">蜂窝网络</a>，将当前蜂窝小区信息传送给网络中的AGPS位置服务器；</li>
+<li>APGS位置服务器根据当前小区信息查询该区域当前可用的卫星信息（包括卫星的频段、方位、仰角等相关信息），生成对应星历文件，并返回给设备；</li>
+<li>通信模块通过串口把收到的星历文件传输给定位模块；</li>
+<li>定位模块根据星历文件，得到的可用卫星信息，快速找到当前可用的GPS卫星，针对性的搜星，大大提升定位时间。</li>
+</ol>
+<h3 id="2-AGPS辅助定位数据"><a href="#2-AGPS辅助定位数据" class="headerlink" title="2. AGPS辅助定位数据"></a>2. AGPS辅助定位数据</h3><ol>
+<li>GPS leap second(闰秒)</li>
+</ol>
+<p>科学上有两种时间计量系统：基于地球自转的天文测量而得出的“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%96%E7%95%8C%E6%97%B6?fromModule=lemma_inlink">世界时</a>”和以原子振荡周期确定的“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8E%9F%E5%AD%90%E6%97%B6?fromModule=lemma_inlink">原子时</a>”。“世界时”由于地球自转的不稳定（由地球物质分布不均匀和其它星球的摄动力等引起的）会带来时间的差异，“原子时”（一种较恒定的时制，由原子钟得出）则是相对恒定不变的。这两种时间尺度速率上的差异，一般来说一至二年会差大约1秒时间。</p>
+<p>1971年<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9B%BD%E9%99%85%E8%AE%A1%E9%87%8F%E5%A4%A7%E4%BC%9A?fromModule=lemma_inlink">国际计量大会</a>通过决议：使用“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6?fromModule=lemma_inlink">协调世界时</a>”来计量时间。当“协调世界时”和“世界时”之差超过0.9秒时，国际地球自转服务组织（IERS）就负责对“协调世界时”拨快或拨慢1秒，这就是闰秒。</p>
+<p>地面的接收机使用的是UTC时间，而人造卫星采用的是原子时时间系统，两个时间单位之间相差即为闰秒。</p>
+<ol start="2">
+<li>电离层延迟参数 Ionospheric delay parameters</li>
+</ol>
+<p>GPS信号通过电离层时，与其他电磁波一样，信号的路径会发生弯曲，传播速度发生变化，从而使测量的距离发生偏差。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs txt">GPSA   2.0489E-08  2.2352E-08 -1.1921E-07 -1.1921E-07       IONOSPHERIC CORR    <br>GPSB   1.2493E+05  3.2768E+04 -2.6214E+05  2.6214E+05       IONOSPHERIC CORR    <br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>星历数据 ephemerides</li>
+</ol>
+<p>GPS星历是实时的，有效期为星历参考时间的前后两小时，是靠监测站对卫星的实时监测进行更新的，轨道参数精度较高，大概在米级别的；历书是非实时的，有效期一周，只是包含卫星轨道的一些大体的参数，精度很低；星历是用来定位的，而历书一般是用来预测卫星的大体位置，对可能出现在视野内的卫星进行有针对性的捕获，缩短首次定位时间。</p>
+<ol start="4">
+<li>参考utc时间</li>
+<li>参考位置：经度，纬度，海拔</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AE%9A%E4%BD%8D/">定位</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/positionning/">positionning</a>
+                    
+                      <a class="hover-with-bg" href="/tags/GPS/">GPS</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/10/prn%E7%A0%81/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">prn码</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/15/crypto/">
+                        <span class="hidden-mobile">crypto</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,530 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dog.jpeg">
+  <link rel="icon" href="/images/dog.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wei yun">
+  <meta name="keywords" content="博客,软件工程师,芯片设计,定位芯片">
+  
+    <meta name="description" content="1. 基础概念1. 对称密钥加密对称密钥加密: （英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密（shared secrets），是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。实务上，这组密钥成为在两个或多个成员间的共同秘密，以便维持专属的通讯联系。 对称密钥加密的主要问题是一旦私钥泄漏，信息即被">
+<meta property="og:type" content="article">
+<meta property="og:title" content="crypto">
+<meta property="og:url" content="http://example.com/2022/08/15/crypto/index.html">
+<meta property="og:site_name" content="云威的博客">
+<meta property="og:description" content="1. 基础概念1. 对称密钥加密对称密钥加密: （英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密（shared secrets），是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。实务上，这组密钥成为在两个或多个成员间的共同秘密，以便维持专属的通讯联系。 对称密钥加密的主要问题是一旦私钥泄漏，信息即被">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/15/crypto/1717168418a4a08a~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="og:image" content="http://example.com/2022/08/15/crypto/1717168e51d0d403~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="og:image" content="http://example.com/2022/08/15/crypto/1717169ba426b17e~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="article:published_time" content="2022-08-15T21:54:18.000Z">
+<meta property="article:modified_time" content="2022-11-07T09:56:47.951Z">
+<meta property="article:author" content="wei yun">
+<meta property="article:tag" content="crypto">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/08/15/crypto/1717168418a4a08a~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+  
+  
+  <title>crypto - 云威的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>云威的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="crypto">
+              
+                crypto
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-16 05:54" pubdate>
+        2022年8月16日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      47 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">crypto</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-基础概念"><a href="#1-基础概念" class="headerlink" title="1. 基础概念"></a>1. 基础概念</h2><h3 id="1-对称密钥加密"><a href="#1-对称密钥加密" class="headerlink" title="1. 对称密钥加密"></a>1. 对称密钥加密</h3><p><strong>对称密钥加密</strong>: （英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密（shared secrets），是密码学中的一类加密算法。这类算法在加密和解密时使用<strong>相同的密钥</strong>，或是使用两个可以简单地相互推算的密钥。实务上，这组密钥成为在两个或多个成员间的共同秘密，以便维持专属的通讯联系。</p>
+<p><strong>对称密钥加密的主要问题是一旦私钥泄漏，信息即被泄漏。</strong>比如摩斯电码可以被看作是一种对称加密算法，比如将英文字母向右移动一位的规则（凯撒密码，移位密码）也是一种对称加密，只是这种简单的加密方法容易被暴力破解。</p>
+<p>在不安全的环境中如何传递对称加密的私钥也是一个难点。因为密钥一旦被截获，信息则被泄漏。(ECDH密钥协商算法可以通过非对称加密共享得到共享密钥)</p>
+<p>常见的对称加密算法有DES、3DES、AES、Blowfish、IDEA、RC5、RC6</p>
+<h3 id="2-非对称密钥加密"><a href="#2-非对称密钥加密" class="headerlink" title="2.非对称密钥加密"></a>2.非对称密钥加密</h3><p><strong>公开密钥加密</strong>（英语：public-key cryptography，又译为公开密钥加密），也称为非对称加密（asymmetric cryptography），一种密码学算法类型。</p>
+<p>在这种密码学方法中，需要一对密钥。一个是<strong>private key</strong>，另一个则是<strong>public key</strong>。这两个密钥是数学相关，用某用户密钥加密后所得的信息，只能用该用户的解密密钥才能解密。如果知道了其中一个，并不能计算出另外一个。因此如果公开了一对密钥中的一个，并不会危害到另外一个的秘密性质。</p>
+<p>public key用于发送给需要给自己发信息的用户，该用户使用该public key来对自己的信息进行加密，再传输回来。这样即使被截获，黑客也无法破解其中的信息，因为只要该public key对应的private key才能够解密。</p>
+<p>非对称加密常用于SSH, HTTPS, TLS，电子证书，电子签名，电子身份证等等</p>
+<h3 id="3-摘要，电子签名-和-电子证书"><a href="#3-摘要，电子签名-和-电子证书" class="headerlink" title="3. 摘要，电子签名 和 电子证书"></a>3. 摘要，电子签名 和 电子证书</h3><p>非对称加密的一个问题是，发送信息者如何确保自己收到的public key来自于接受信息者。黑客很有可能将自己的public key冒充成接受信息者的key，从而获取到信息。比如在浏览器和服务器之间的数据传输中，需要确认服务器发送给浏览器的public key是来自于该服务器。</p>
+<p>此时该服务器的public key和对应身份需要可信赖机构的认证，公开密钥基础建设负责分发认证申请，并分发电子证书。客户端收到电子证书后可以通过预先安装的根证书，验证该密钥是否对应于该服务器。</p>
+<p>数字证书的生成实际上是用可信赖机构的私钥对服务器公钥和服务器信息加密，生成的。这样客户端通过可信赖机构的公钥解密该证书即可分辨该公钥和服务器信息是否对应。数字证书一般由数字证书认证机构（Certificate Authority）颁发，证书里面包含了真实服务器的公钥和网站的一些其他信息，数字证书机构用自己的私钥加密后发给浏览器，浏览器使用数字证书机构的公钥解密后得到真实服务器的公钥。这个过程是建立在被大家所认可的证书机构之上得到的公钥，所以这是一种安全的方式。</p>
+<h3 id="4-ssh原理"><a href="#4-ssh原理" class="headerlink" title="4. ssh原理"></a>4. ssh原理</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.jellythink.com/archives/555">https://www.jellythink.com/archives/555</a></p>
+</blockquote>
+<p>SSH使用非对称加密的一种通信协议。</p>
+<p>SSH免密登陆的前提是使用<code>ssh-keygen -t RSA</code>生成公私秘钥对，然后通过<code>ssh-copy-id -i ~/.ssh/id_rsa.pub user@host</code>命令将公钥分发至远程主机。接下来的每次免密登陆步骤如下：</p>
+<ol>
+<li>用户使用<code>ssh user@host</code>命令对远程主机发起登陆；</li>
+<li><strong>远程主机对用户返回一个随机串</strong>；</li>
+<li>用户所在主机使用私钥对这个随机串进行加密，并将加密的随机串返回至远程主机；</li>
+<li>远程主机使用分发过来的公钥对加密随机串进行解密；</li>
+<li>如果解密成功，就证明用户的登陆信息是正确的，则允许登陆；否则反之。</li>
+</ol>
+<p>通过<code>ssh-copy-id -i ~/.ssh/id_rsa.pub user@host</code>命令分发的公钥都会被保存至远程主机的<code>~/.ssh/authorized_keys</code>文件中。</p>
+<h3 id="5-哈希算法"><a href="#5-哈希算法" class="headerlink" title="5. 哈希算法"></a>5. 哈希算法</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1304227729113121">https://www.liaoxuefeng.com/wiki/1252599548343744/1304227729113121</a></p>
+</blockquote>
+<p>哈希算法（Hash）又称摘要算法（Digest），它的作用是：对任意一组输入数据进行计算，得到一个固定长度的输出摘要。相同的输入得到相同的输出摘要，不同的输入大概率得到不同的输出。</p>
+<p>哈希碰撞时不可避免的，因为输出的字节数是一定的，所以能够保证不发生碰撞时,最大的输入个数必须大于等于输出的最大个数。而输入是有无限种可能的。所以，哈希算法是把一个无限的输入集合映射到一个有限的输出集合，必然会产生碰撞。</p>
+<p>哈希算法要求碰撞的概率极低，以及难以从输出推测输入。哈希碰撞的概率越低，哈希算法越安全。</p>
+<h2 id="2-对称加密算法"><a href="#2-对称加密算法" class="headerlink" title="2. 对称加密算法"></a>2. 对称加密算法</h2><h3 id="1-XOR加密"><a href="#1-XOR加密" class="headerlink" title="1. XOR加密"></a>1. XOR加密</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2017/05/xor.html">http://www.ruanyifeng.com/blog/2017/05/xor.html</a></p>
+</blockquote>
+<p>异或运算的特性是，如果对原始值对一个密钥进行两次异或，会得到这个值本身。刚好可以用于<strong>对称加密</strong>。XOR加密相同的明文会对应相同的密文，这是很大的一个问题。</p>
+<h3 id="2-AES-GCM加密算法"><a href="#2-AES-GCM加密算法" class="headerlink" title="2. AES-GCM加密算法"></a>2. AES-GCM加密算法</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904122676690951">https://juejin.cn/post/6844904122676690951</a></p>
+</blockquote>
+<p>AES加密就是对称加密的一种，即加密和解密使用相同的一把密钥。它的全称是Advanced Encryption Standard(高级加密标准)，主要是用来取代DES加密算法。</p>
+<p>GCM是<a href="https://link.juejin.cn/?target=https://zh.wikipedia.org/zh-cn/%E8%AE%A4%E8%AF%81%E5%8A%A0%E5%AF%86">认证加密</a>模式中的一种，它结合了上述两者的特点(GCM中的G就是指GMAC，C就是指CTR)，能同时确保数据的保密性、完整性及真实性，另外，它还可以提供附加消息的完整性校验。</p>
+<p>AES密钥必须是保密的，而nonce类似于salt，可以随机生成并以明文的方式附在密文后，或者通过相同的shared secret生成相同的nonce。两种方式均可以保证接收方能够收到nonce，而key却是保密的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs python">shared_secret = ecdh_compute_shared_secret(ecc_key1,ecc_key2)<br>aes_key = SHA256.new(shared_secret + <span class="hljs-string">b&#x27;key&#x27;</span>).digest()[:AES128_KEY_LEN]<br>aes_nonce = SHA256.new(shared_secret + <span class="hljs-string">b&#x27;nonce&#x27;</span>).digest()[:AES_NONCE_SIZE]<br>cipher = AES.new(aes_key, AES.MODE_GCM, nonce=aes_nonce, mac_len=AES_TAG_SIZE)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-分组加密"><a href="#3-分组加密" class="headerlink" title="3. 分组加密"></a>3. 分组加密</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b63095c59361">https://www.jianshu.com/p/b63095c59361</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_block_chaining_(CBC)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_block_chaining_(CBC)</a></p>
+<p>因为分组加密只能加密固定长度的分组，而实际需要加密的明文可能超过分组长度，此时就要对分组密码算法进行迭代，以完成整个明文加密，迭代的方法就是加密模式。</p>
+</blockquote>
+<p><img src="/2022/08/15/crypto/1717168418a4a08a~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="工作模式"></p>
+<h4 id="1-ECB电子密码本"><a href="#1-ECB电子密码本" class="headerlink" title="1. ECB电子密码本"></a>1. ECB电子密码本</h4><p>使用相同的密钥对不同的分组进行加密</p>
+<p>缺乏混淆性，相同的明文对应相同的密文，极可能会暴露数据的pattern。加密一个要点在于相同的明文能够对应不同的密文，以此隐藏数据的模式！</p>
+<h4 id="2-初始向量-IV，Initialization-Vector"><a href="#2-初始向量-IV，Initialization-Vector" class="headerlink" title="2. 初始向量(IV，Initialization Vector)"></a>2. <strong>初始向量(IV，Initialization Vector)</strong></h4><p>为了防止相同的明文对应相同的密文，AES密钥需要随着分组的不同被修改。</p>
+<p><img src="/2022/08/15/crypto/1717168e51d0d403~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="初始向量"></p>
+<h4 id="3-CTR模式"><a href="#3-CTR模式" class="headerlink" title="3. CTR模式"></a>3. CTR模式</h4><p><img src="/2022/08/15/crypto/1717169ba426b17e~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="CTR"></p>
+<h2 id="3-非对称加密算法"><a href="#3-非对称加密算法" class="headerlink" title="3. 非对称加密算法"></a>3. 非对称加密算法</h2><h3 id="1-ECC：椭圆曲线密码学"><a href="#1-ECC：椭圆曲线密码学" class="headerlink" title="1. ECC：椭圆曲线密码学"></a>1. ECC：椭圆曲线密码学</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36326221">https://zhuanlan.zhihu.com/p/36326221</a><br><a target="_blank" rel="noopener" href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019172260">https://segmentfault.com/a/1190000019172260</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 曲线方程为 y^2 = x^3 + ax + b</span><br><span class="hljs-meta">@dataclasses.dataclass(<span class="hljs-params">init=<span class="hljs-literal">False</span></span>)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">EccCurve</span>:<br>    name: <span class="hljs-built_in">str</span><br>    p: <span class="hljs-built_in">int</span> <span class="hljs-comment"># 有限域点的个数，定义有限域</span><br>    a: <span class="hljs-built_in">int</span> <span class="hljs-comment"># 曲线参数</span><br>    b: <span class="hljs-built_in">int</span> <span class="hljs-comment"># 曲线参数</span><br>    order: <span class="hljs-built_in">int</span> <span class="hljs-comment"># 基点的阶，order * (Gx, Gy) = 0</span><br>    Gx: <span class="hljs-built_in">int</span> <span class="hljs-comment"># 基点为(Gx, Gy)</span><br>    Gy: <span class="hljs-built_in">int</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Note: 有限域内逆元的定义 (inv(x) * x) % p = 1，模反元素</span><br><span class="hljs-string">基点 * 私钥 = 公钥</span><br><span class="hljs-string">G  *  d   =  Q</span><br><span class="hljs-string">离散对数问题保证了，已经大数d的情况下计算Q很容易，反推困难。这个特性确保了密钥难以被破解。私钥可以是随机生成的数</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 公钥 point_Q(point_x, point_y)，私钥(d)</span><br>EccKey(curve=<span class="hljs-string">&#x27;NIST P-521&#x27;</span>, point_x=<span class="hljs-number">1878215278705420913809941221673070453630291285278607802615476602600875358248113817201275279498247334786329838442133900179181579335312961075329458832888483454</span>, point_y=<span class="hljs-number">1492631405230049828034629191114631058481712503830618825528196556525243860134770105498486116951576226435160198858744355258829276721863793065418711188792568624</span>, d=<span class="hljs-number">14795520984477726864976711521888896156542260800586806650124809936525264257017938443585197860840835415724634154698356719165115708346614576620653695982388024</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-ECDH密钥协商算法"><a href="#2-ECDH密钥协商算法" class="headerlink" title="2. ECDH密钥协商算法"></a>2. ECDH密钥协商算法</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.orchome.com/1049">https://www.orchome.com/1049</a></p>
+</blockquote>
+<p><strong>ECDH能够在不安全的网络传输中安全的分发密钥（共享密钥）</strong>，分发的这个密钥可以作为对称加密的共享密钥。</p>
+<p>基本原理是，双方交换公钥后能够推算出共享密钥，而只有知道其中一个的私钥才能够破解该共享密钥。而ECC的离散对数问题确保了私钥难以被破解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">shared_secret = da * Qb = db * Qa = da * db * G<br></code></pre></td></tr></table></figure>
+
+<p><strong>shared_secret的x点可以作为共享密钥来进行对称加密数据传输</strong>。</p>
+<p>然而ECDH不能够验证公钥是否来自于中间人攻击，即中间人可能将双方交换的公钥替换为自己生成的公钥，从而轻易的破解双方的信息以及伪装为对方通信。因此交换密钥之前可以通过使用公共证书颁发机构 (CA) 向双方提供可信数字签名密钥，CA权威机构可以确保该公钥确实来自于对方而不是中间人。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">ecdh_compute_shared_secret</span>(<span class="hljs-params">self_pri_key: ECC.EccKey,</span><br><span class="hljs-params">                               other_pub_key: ECC.EccKey</span>) -&gt; <span class="hljs-built_in">bytes</span>:<br>    <span class="hljs-keyword">assert</span> (self_pri_key.curve == other_pub_key.curve)<br>    point = other_pub_key.pointQ * self_pri_key.d<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(point.x).to_bytes(point.size_in_bytes(), <span class="hljs-string">&#x27;big&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-ECDSA签名算法"><a href="#3-ECDSA签名算法" class="headerlink" title="3. ECDSA签名算法"></a>3. ECDSA签名算法</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.orchome.com/1432">https://www.orchome.com/1432</a></p>
+</blockquote>
+<p><strong>数字签名</strong>：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1304227943022626">https://www.liaoxuefeng.com/wiki/1252599548343744/1304227943022626</a></p>
+<p>私钥加密得到的密文实际上就是数字签名，要验证这个签名是否正确，只能用私钥持有者的公钥进行解密验证。</p>
+<p>使用数字签名的目的是为了<strong>确认某个信息确实是由某个发送方发送的</strong>，任何人都不可能伪造消息，并且，发送方也不能抵赖。数字签名可以确保该信息确实是由发送方发出的，而不能被伪造。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">ecdsa_det_sign</span>(<span class="hljs-params">self_pri_key: ECC.EccKey, msg: <span class="hljs-built_in">bytes</span></span>) -&gt; <span class="hljs-built_in">bytes</span>:<br>    hash_obj = SHA256.new(msg)<br>    signer = DSS.new(self_pri_key,<br>                     mode=<span class="hljs-string">&#x27;deterministic-rfc6979&#x27;</span>,<br>                     encoding=<span class="hljs-string">&#x27;binary&#x27;</span>)<br>    signature = signer.sign(hash_obj)<br>    <span class="hljs-keyword">return</span> signature<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">ecdsa_verify</span>(<span class="hljs-params">other_pub_key: ECC.EccKey, msg: <span class="hljs-built_in">bytes</span>, signature: <span class="hljs-built_in">bytes</span></span>):<br>    hash_obj = SHA256.new(msg)<br>    verifier = DSS.new(other_pub_key,<br>                       mode=<span class="hljs-string">&#x27;deterministic-rfc6979&#x27;</span>,<br>                       encoding=<span class="hljs-string">&#x27;binary&#x27;</span>)<br>    verifier.verify(hash_obj, signature)<br></code></pre></td></tr></table></figure>
+
+<p>在实际应用的时候，签名实际上并不是针对原始消息，而是针对原始消息的哈希进行签名。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/crypto/">crypto</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/crypto/">crypto</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/14/positionning/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">定位基础</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/10/Linux0-11%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">
+                        <span class="hidden-mobile">Linux0.11源码阅读</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

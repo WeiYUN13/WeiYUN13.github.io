@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dog.jpeg">
+  <link rel="icon" href="/images/dog.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wei yun">
+  <meta name="keywords" content="博客,软件工程师,芯片设计,定位芯片">
+  
+    <meta name="description" content="1. 简介 https:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;IAM&#x2F;latest&#x2F;UserGuide&#x2F;introduction.html  **AWS Identity and Access Management (IAM)**：AWS身份认证和资源权限控制 AWS account root user：根用户，拥有所有的AWS资源和服务的完全权限。类似于linux的root用户，不可以使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS IAM">
+<meta property="og:url" content="http://example.com/2022/07/06/AWS-IAM/index.html">
+<meta property="og:site_name" content="云威的博客">
+<meta property="og:description" content="1. 简介 https:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;IAM&#x2F;latest&#x2F;UserGuide&#x2F;introduction.html  **AWS Identity and Access Management (IAM)**：AWS身份认证和资源权限控制 AWS account root user：根用户，拥有所有的AWS资源和服务的完全权限。类似于linux的root用户，不可以使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/07/06/AWS-IAM/image-20220707175842312.png">
+<meta property="og:image" content="http://example.com/2022/07/06/AWS-IAM/image-20220707141821384.png">
+<meta property="article:published_time" content="2022-07-06T18:50:45.000Z">
+<meta property="article:modified_time" content="2022-11-07T09:56:47.939Z">
+<meta property="article:author" content="wei yun">
+<meta property="article:tag" content="AWS IAM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/07/06/AWS-IAM/image-20220707175842312.png">
+  
+  
+  <title>AWS IAM - 云威的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>云威的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="AWS IAM">
+              
+                AWS IAM
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-07-07 02:50" pubdate>
+        2022年7月7日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">AWS IAM</h1>
+            
+            <div class="markdown-body">
+              <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html</a></p>
+</blockquote>
+<p>**AWS Identity and Access Management (IAM)**：AWS身份认证和资源权限控制</p>
+<p><strong>AWS account root user</strong>：根用户，拥有所有的AWS资源和服务的完全权限。类似于linux的root用户，不可以使用AWS根用户执行日常的操作。而是使用根用户去创建管理员用户和管理员用户组。使用管理员用户执行管理权限。</p>
+<p>IAM的特性：</p>
+<ul>
+<li>共享AWS账户资源，不需要共享key或者密码</li>
+<li>精细的资源权限控制：对于不同的IAM用户，授予不同的资源权限</li>
+<li>IAM为AWS的application提供AWS资源的访问权限：robot用户</li>
+<li><strong>联合身份</strong>：使用如google账户认证获取临时的credentials来访问某一个IAM user</li>
+</ul>
+<p><img src="/2022/07/06/AWS-IAM/image-20220707175842312.png" srcset="/img/loading.gif" lazyload alt="image-20220707175842312"></p>
+<h2 id="1-术语"><a href="#1-术语" class="headerlink" title="1. 术语"></a>1. 术语</h2><h3 id="1-IAM-Resources"><a href="#1-IAM-Resources" class="headerlink" title="1. IAM Resources"></a>1. IAM Resources</h3><p>IAM资源指IAM对象，包括 user, group, role, policy, and identity provider</p>
+<p>identity provider：身份认证提供商，如GoogleApps。使用第三方的身份认证方式管理用户以及资源权限。</p>
+<h3 id="2-IAM-Identities"><a href="#2-IAM-Identities" class="headerlink" title="2. IAM Identities"></a>2. IAM Identities</h3><p>包括users, groups, and roles。指可以赋予policy的IAM对象，用于身份鉴别以及分组。</p>
+<h3 id="3-IAM-Entities"><a href="#3-IAM-Entities" class="headerlink" title="3. IAM Entities"></a>3. IAM Entities</h3><p>可用于鉴权的实体，如具体指 user，federated user（联合用户）和 assumed IAM roles</p>
+<h3 id="4-Principals"><a href="#4-Principals" class="headerlink" title="4. Principals"></a>4. Principals</h3><p>是指利用 root 用户或 IAM user&#x2F;role 进行登录并请求（Request）使用 AWS 服务的<strong>个人或者应用</strong></p>
+<h3 id="5-Authentication-and-Authorization"><a href="#5-Authentication-and-Authorization" class="headerlink" title="5. Authentication and Authorization"></a>5. Authentication and Authorization</h3><p>Authentication: 身份验证，指用户是否能够通过当前的credentials发送request</p>
+<p>Authorization：授权，指当前的request是否有足够的权限执行。</p>
+<h4 id="1-Attribute-based-access-control-ABAC"><a href="#1-Attribute-based-access-control-ABAC" class="headerlink" title="1. Attribute-based access control (ABAC)"></a>1. Attribute-based access control (ABAC)</h4><p>基于属性的访问控制，在role和resource的tag:value值相同时，允许访问该资源。增加权限时只需要修改资源的tag:value值。</p>
+<h4 id="2-Role-based-access-control-RBAC"><a href="#2-Role-based-access-control-RBAC" class="headerlink" title="2. Role-based access control (RBAC)"></a>2. Role-based access control (RBAC)</h4><p>对不同的IAM identities赋予不同的policy，这叫基于角色的访问控制。若需要修改权限，则需要修改policy</p>
+<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2. 概念"></a>2. 概念</h1><h2 id="1-users"><a href="#1-users" class="headerlink" title="1. users"></a>1. users</h2><p><strong>IAM users</strong>： 类似于linux系统中的用户，共享AWS账户资源，user也可以是application的robot用户，user也可以是管理员用户。可以通过创建IAM用户并分发credentials的方式分配账户。或者通过<strong>联合身份验证</strong>的方式，如G Suite SAML认证的方式，从AWS中获取临时的credentials。</p>
+<p><strong>联合身份验证</strong>的方式通过google账户认证获取临时的credentials来访问某一个IAM</p>
+<p><img src="/2022/07/06/AWS-IAM/image-20220707141821384.png" srcset="/img/loading.gif" lazyload alt="image-20220707141821384"></p>
+<h2 id="2-user-group"><a href="#2-user-group" class="headerlink" title="2. user group"></a>2. user group</h2><p>等同于linux的用户组概念。相同group的用户具有类似的权限。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">aws iam create-group --group-name Admins<br>&#123;<br>    &quot;Group&quot;: &#123;<br>        &quot;Path&quot;: &quot;/&quot;, <br>        &quot;CreateDate&quot;: &quot;2014-06-05T20:29:53.622Z&quot;, <br>        &quot;GroupId&quot;:&quot;ABCDEFGHABCDEFGHABCDE&quot;,<br>        &quot;Arn&quot;: &quot;arn:aws:iam::123456789012:group/Admins&quot;, <br>        &quot;GroupName&quot;: &quot;Admins&quot;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-policy"><a href="#3-policy" class="headerlink" title="3. policy"></a>3. policy</h2><p>policy定义了该用户组下所有的用户对AWS资源操作的权限，如AdministratorAccess管理员权限。policy可以被用户自定义。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">aws iam attach-group-policy --group-name Admins --policy-arn arn:aws:iam::aws:policy/AdministratorAccess<br></code></pre></td></tr></table></figure>
+
+<p>policy在赋予用户组后可以继续被管理员更新，以增加或者减少资源权限。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;Version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2012-10-17&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;Statement&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;Sid&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;FullAccessToSomeServices&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;Effect&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Allow&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;Action&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>              <span class="hljs-string">&quot;ec2:*&quot;</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-string">&quot;s3:*&quot;</span><br>          <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;Resource&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;Effect&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Allow&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;Action&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>              <span class="hljs-string">&quot;iam:CreateServiceLinkedRole&quot;</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-string">&quot;iam:DeleteServiceLinkedRole&quot;</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-string">&quot;iam:ListRoles&quot;</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-string">&quot;organizations:DescribeOrganization&quot;</span><br>          <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;Resource&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;Version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2012-10-17&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;Statement&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;Effect&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Allow&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;Action&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dynamodb:*&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;Resource&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;arn:aws:dynamodb:us-east-2:123456789012:table/Books&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>policies中的permission决定了request是否能够被执行。</p>
+<h2 id="4-role"><a href="#4-role" class="headerlink" title="4. role"></a>4. role</h2>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/AWS/">AWS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/AWS-IAM/">AWS IAM</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/27/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">网络基础</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/14/AWS-CDK/">
+                        <span class="hidden-mobile">AWS CDK</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

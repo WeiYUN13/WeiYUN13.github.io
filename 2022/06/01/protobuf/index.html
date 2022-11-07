@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dog.jpeg">
+  <link rel="icon" href="/images/dog.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wei yun">
+  <meta name="keywords" content="博客,软件工程师,芯片设计,定位芯片">
+  
+    <meta name="description" content="1. 简介 https:&#x2F;&#x2F;developers.google.com&#x2F;protocol-buffers?hl&#x3D;en  数据序列化和结构化的方案常见的有：xml, json, yaml等以及protobuf。 序列化：将结构数据或对象转换成能够被存储和传输（例如网络传输）的格式，同时应当要保证这个序列化结果在之后（可能在另一个计算环境中）能够被重建回原来的结构数据或对象。数据序列化侧重于效率和压缩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="protobuf">
+<meta property="og:url" content="http://example.com/2022/06/01/protobuf/index.html">
+<meta property="og:site_name" content="云威的博客">
+<meta property="og:description" content="1. 简介 https:&#x2F;&#x2F;developers.google.com&#x2F;protocol-buffers?hl&#x3D;en  数据序列化和结构化的方案常见的有：xml, json, yaml等以及protobuf。 序列化：将结构数据或对象转换成能够被存储和传输（例如网络传输）的格式，同时应当要保证这个序列化结果在之后（可能在另一个计算环境中）能够被重建回原来的结构数据或对象。数据序列化侧重于效率和压缩">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-01T18:51:22.000Z">
+<meta property="article:modified_time" content="2022-11-07T09:56:47.955Z">
+<meta property="article:author" content="wei yun">
+<meta property="article:tag" content="protobuf">
+<meta property="article:tag" content="数据序列化">
+<meta property="article:tag" content="数据结构化">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>protobuf - 云威的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>云威的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="protobuf">
+              
+                protobuf
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-02 02:51" pubdate>
+        2022年6月2日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      42 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">protobuf</h1>
+            
+            <div class="markdown-body">
+              <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://developers.google.com/protocol-buffers?hl=en">https://developers.google.com/protocol-buffers?hl=en</a></p>
+</blockquote>
+<p>数据序列化和结构化的方案常见的有：xml, json, yaml等以及protobuf。</p>
+<p>序列化：将<strong>结构数据</strong>或<strong>对象</strong>转换成<strong>能够被存储和传输（例如网络传输）的格式</strong>，同时应当要保证这个序列化结果在之后（可能在另一个计算环境中）能够被重建回原来的结构数据或对象。数据序列化侧重于效率和压缩。</p>
+<p>结构化：侧重数据的可读性。标记性语言更多侧重于数据的结构化。</p>
+<p>protobuf能够很好的压缩数据，但是可读性上相对较差。</p>
+<h1 id="2-protobuf的优势"><a href="#2-protobuf的优势" class="headerlink" title="2. protobuf的优势"></a>2. protobuf的优势</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a24c88c0526a">https://www.jianshu.com/p/a24c88c0526a</a></p>
+<ul>
+<li>可以在python，c++, java等主流编程语言中共享数据。使用protobuf语法编写的.proto文件（定义存储的数据结构）可以由protobuf的编译器编译生成不同语言的类文件，用于访问以及生成数据，类文件中提供各种相关的api。</li>
+<li>序列化后的数据可跨语言共享：序列化后的数据(.prototxt)在各语言中格式一致，并能够被各语言的protobuf api读取以及访问，从而实现的数据的跨语言共享。</li>
+<li>简单来说：protobuf被多语言支持（提供了生成多语言类文件的编译器，这些类文件可以生成并读写数据），比XML更加轻量易读。</li>
+</ul>
+<h1 id="3-protobuf的使用"><a href="#3-protobuf的使用" class="headerlink" title="3. protobuf的使用"></a>3. protobuf的使用</h1><h2 id="1-定义message"><a href="#1-定义message" class="headerlink" title="1.定义message"></a>1.定义message</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://developers.google.com/protocol-buffers/docs/proto3">https://developers.google.com/protocol-buffers/docs/proto3</a></p>
+</blockquote>
+<p><code>=1,=2</code> tag用于在encoding的二进制文件中代表不同的属性，因此将repeated的属性用小的tag值，将不常用的属性用大的tag值，能够在一定程度上优化存储。</p>
+<p><code>optional</code>属性若不设定则为其默认值，而required属性则必须设定。</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto2&quot;</span>;<br><span class="hljs-keyword">package</span> tutorial;<br><br><span class="hljs-keyword">message </span><span class="hljs-title class_">Person</span> &#123;<br>  <span class="hljs-keyword">required</span> <span class="hljs-type">string</span> name = <span class="hljs-number">1</span>;<br>  <span class="hljs-keyword">required</span> <span class="hljs-type">int32</span> id = <span class="hljs-number">2</span>;<br>  <span class="hljs-keyword">optional</span> <span class="hljs-type">string</span> email = <span class="hljs-number">3</span>;<br><br>  <span class="hljs-keyword">enum </span><span class="hljs-title class_">PhoneType</span> &#123;<br>    MOBILE = <span class="hljs-number">0</span>;<br>    HOME = <span class="hljs-number">1</span>;<br>    WORK = <span class="hljs-number">2</span>;<br>  &#125;<br>  <span class="hljs-keyword">message </span><span class="hljs-title class_">PhoneNumber</span> &#123;<br>    <span class="hljs-keyword">required</span> <span class="hljs-type">string</span> number = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">optional</span> PhoneType type = <span class="hljs-number">2</span> [default = HOME];<br>  &#125;<br>  <span class="hljs-keyword">repeated</span> PhoneNumber phones = <span class="hljs-number">4</span>;<br>&#125;<br><span class="hljs-keyword">message </span><span class="hljs-title class_">AddressBook</span> &#123;<br>  <span class="hljs-keyword">repeated</span> Person people = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-编译protobuf"><a href="#2-编译protobuf" class="headerlink" title="2.编译protobuf"></a>2.编译protobuf</h2><p>使用protobuf的编译器protoc编译.proto文件，生成对应的class。对应python_out，有不同对应的语言支持。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">protoc -I=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/addressbook.proto<br><span class="hljs-meta prompt_"># </span><span class="language-bash">protoc -I=./ --python_out=./ ./addressbook.proto</span><br></code></pre></td></tr></table></figure>
+
+<p>生成<strong>address_pb2.py</strong>文件，_pb2为添加的后缀。</p>
+<ul>
+<li>不同于其他的语言，python不直接生成对应的class，而是使用特殊的descriptor的方法描述message，可以理解成一个生成 class的模版。通过metaclass方法，如type，使用descriptor定义的属性字典，动态生成python class。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>(message.Message):<br>  <span class="hljs-comment"># metaclass是用于生成class的模版</span><br>  __metaclass__ = reflection.GeneratedProtocolMessageType<br><br>  <span class="hljs-keyword">class</span> <span class="hljs-title class_">PhoneNumber</span>(message.Message):<br>    __metaclass__ = reflection.GeneratedProtocolMessageType<br>    DESCRIPTOR = _PERSON_PHONENUMBER<br>  <span class="hljs-comment"># 在load时，GeneratedProtocolMessageType metaclass使用descriptor来生成对应的python module</span><br>  DESCRIPTOR = _PERSON<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">AddressBook</span>(message.Message):<br>  __metaclass__ = reflection.GeneratedProtocolMessageType<br>  DESCRIPTOR = _ADDRESSBOOK<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>descriptor的定义：实际上是attr dict</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python">_ADDRESSBOOK = _descriptor.Descriptor(<br>  name=<span class="hljs-string">&#x27;AddressBook&#x27;</span>,<br>  full_name=<span class="hljs-string">&#x27;tutorial.AddressBook&#x27;</span>,<br>  filename=<span class="hljs-literal">None</span>,<br>  file=DESCRIPTOR,<br>  containing_type=<span class="hljs-literal">None</span>,<br>  create_key=_descriptor._internal_create_key,<br>  fields=[<br>    _descriptor.FieldDescriptor(<br>      name=<span class="hljs-string">&#x27;people&#x27;</span>, full_name=<span class="hljs-string">&#x27;tutorial.AddressBook.people&#x27;</span>, index=<span class="hljs-number">0</span>,<br>      number=<span class="hljs-number">1</span>, <span class="hljs-built_in">type</span>=<span class="hljs-number">11</span>, cpp_type=<span class="hljs-number">10</span>, label=<span class="hljs-number">3</span>,<br>      has_default_value=<span class="hljs-literal">False</span>, default_value=[],<br>      message_type=<span class="hljs-literal">None</span>, enum_type=<span class="hljs-literal">None</span>, containing_type=<span class="hljs-literal">None</span>,<br>      is_extension=<span class="hljs-literal">False</span>, extension_scope=<span class="hljs-literal">None</span>,<br>      serialized_options=<span class="hljs-literal">None</span>, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),<br>  ],<br>  extensions=[<br>  ],<br>  nested_types=[],<br>  enum_types=[<br>  ],<br>  serialized_options=<span class="hljs-literal">None</span>,<br>  is_extendable=<span class="hljs-literal">False</span>,<br>  syntax=<span class="hljs-string">&#x27;proto2&#x27;</span>,<br>  extension_ranges=[],<br>  oneofs=[<br>  ],<br>  serialized_start=<span class="hljs-number">249</span>,<br>  serialized_end=<span class="hljs-number">296</span>,<br>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>生成class的代码</li>
+</ul>
+<p>通过**_reflection.GeneratedProtocolMessageType()**方法生成message对应的python模块与api</p>
+<p>**_reflection.GeneratedProtocolMessageType()**实际上是类似于type()的metaclass方法，用于动态生成python的class</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">AddressBook = _reflection.GeneratedProtocolMessageType(<span class="hljs-string">&#x27;AddressBook&#x27;</span>, (_message.Message,), &#123;<br>  <span class="hljs-string">&#x27;DESCRIPTOR&#x27;</span> : _ADDRESSBOOK,<br>  <span class="hljs-string">&#x27;__module__&#x27;</span> : <span class="hljs-string">&#x27;address_pb2&#x27;</span><br>  <span class="hljs-comment"># @@protoc_insertion_point(class_scope:tutorial.AddressBook)</span><br>  &#125;)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">https://github.com/protocolbuffers/protobuf/blob/87dd07b4367b7676af42105d0d102f4e536c248b/python/google/protobuf/internal/python_message.py</span><br><span class="hljs-string">class GeneratedProtocolMessageType(type) 动态创建对应的class对象</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-读写protobuf"><a href="#3-读写protobuf" class="headerlink" title="3.读写protobuf"></a>3.读写protobuf</h2><ul>
+<li>api</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://developers.google.com/protocol-buffers/docs/reference/python-generated">https://developers.google.com/protocol-buffers/docs/reference/python-generated</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> addressbook_pb2<br>person = addressbook_pb2.Person()<br><span class="hljs-built_in">print</span>(person.<span class="hljs-built_in">id</span>)  <span class="hljs-comment"># 未定义的属性返回其默认值</span><br>person.<span class="hljs-built_in">id</span> = <span class="hljs-number">1234</span><br><span class="hljs-comment"># 类型必须一致且属性必须存在</span><br>person.not_exist_field = <span class="hljs-number">10</span> <span class="hljs-comment"># error raised</span><br>person.name = <span class="hljs-string">&quot;John Doe&quot;</span><br>person.email = <span class="hljs-string">&quot;jdoe@example.com&quot;</span><br>phone = person.phones.add()<br>phone.number = <span class="hljs-string">&quot;555-4321&quot;</span><br><br><span class="hljs-comment"># enum的值为int</span><br>phone.<span class="hljs-built_in">type</span> = addressbook_pb2.Person.HOME <span class="hljs-comment"># or addressbook_pb2.Person.PhoneType.HOME</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>序列化和反序列化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">s = person.SerializeToString()<br><span class="hljs-comment"># 得到二进制的字符串</span><br><span class="hljs-comment"># s = b&#x27;\n\x08John Doe\x10\xd2\t\x1a\x10jdoe@example.com&quot;\x0c\n\x08555-4321\x10\x01&#x27;</span><br>new_person = addressbook_pb2.Person()<br>new_person.ParseFromString(s) <span class="hljs-comment">#反序列化</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-protobuf的编码"><a href="#4-protobuf的编码" class="headerlink" title="4. protobuf的编码"></a>4. protobuf的编码</h1><ul>
+<li>varint编码方案</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://izualzhy.cn/protobuf-encode-varint-and-zigzag">https://izualzhy.cn/protobuf-encode-varint-and-zigzag</a></p>
+<p><a target="_blank" rel="noopener" href="https://developers.google.com/protocol-buffers/docs/encoding">https://developers.google.com/protocol-buffers/docs/encoding</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;varint编码简介</span><br><span class="hljs-string">a = 197, varint(a) = 0xC5_01, 转为二进制 0b11000101_00000001</span><br><span class="hljs-string">转换过程：</span><br><span class="hljs-string">1. 每个byte的最高位代表后续的byte是否属于这个数字，比如0b11000101_00000001中</span><br><span class="hljs-string">第一个字节的最高位1表示第二个字节属于本数，第二个字节最高位0代表本数字的结束</span><br><span class="hljs-string">2. 去掉每个字节的最高位，并调换字节的顺序后拼接</span><br><span class="hljs-string">7位     7位</span><br><span class="hljs-string">0000001_1000101 = 197</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>varint编码实现了不定长的整形数据编码，能够为序列化节省一定的空间。</p>
+<ul>
+<li>实例</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">message Test1 &#123;</span><br><span class="hljs-string">  optional int32 a = 1;</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string">并设定 a = 197, 序列化后得到 b&#x27;\x08\xc5\x01&#x27;</span><br><span class="hljs-string">\xc5\x01 代表a的值为197，是197的varint编码</span><br><span class="hljs-string"></span><br><span class="hljs-string">protobuf message是一系列的键值对，键为(field_number &lt;&lt; 3) | wire_type</span><br><span class="hljs-string">因此,0x08表示wire_type = 0, field_number = 1</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>ZigZag编码</li>
+</ul>
+<p>ZigZag是将有符号数统一映射到无符号数的一种编码方案，对于无符号数<code>0 1 2 3 4</code>，映射前的有符号数分别为<code>0 -1 1 -2 2</code>，负数以及对应的正数来回映射到从0变大的数字序列里，这也是”zig-zag”的名字来源。</p>
+<p>也就是说</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> n &gt;= <span class="hljs-number">0</span> :<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * n<br><span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">0</span>:<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * <span class="hljs-built_in">abs</span>(n) - <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>转换后可以使用varint编码，绝对值较小的负数占用较少的空间。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/protobuf/">protobuf</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/protobuf/">protobuf</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97%E5%8C%96/">数据序列化</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8C%96/">数据结构化</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/07/AWS-CloudFormation/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AWS CloudFormation</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/01/%E5%A0%86%E6%8E%92%E5%BA%8F/">
+                        <span class="hidden-mobile">堆排序</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
